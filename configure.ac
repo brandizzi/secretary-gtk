@@ -7,6 +7,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile])
 
 PKG_CHECK_MODULES([GTK], [gtk+-2.0])
+PKG_CHECK_MODULES([SECRETARY], [libsecretary-0.1])
+
 
 
 AC_OUTPUT
