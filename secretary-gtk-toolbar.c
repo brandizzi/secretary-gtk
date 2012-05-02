@@ -1,4 +1,5 @@
 #include "secretary-gtk-toolbar.h"
+#include "secretary-gtk-gettext.h"
 
 static GtkToolItem *_secretary_aware_button_new(Secretary *secretary,
         const gchar *stock_id) {
