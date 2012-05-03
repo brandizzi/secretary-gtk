@@ -39,3 +39,16 @@ ltmain\.sh
 # 
 compile
 
+config.rpath
+messages.mo
+po/POTFILES
+po/Rules-quot
+po/boldquot.sed
+po/en@boldquot.header
+po/en@quot.header
+po/insert-header.sin
+po/pt_BR.gmo
+po/quot.sed
+po/remove-potcdate.sin
+po/secretary-gtk.pot
+po/stamp-po

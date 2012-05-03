@@ -5,7 +5,7 @@
 
 GtkWidget *sct_gtk_quit(GtkWidget *widget, GdkEvent *event, gpointer data) {
     Notebook *notebook = data;
-    g_print("My notebook is %s\n", notebook->filename);
+    g_print(_("My notebook is %s\n"), notebook->filename);
     gtk_main_quit();
     return FALSE;
 }

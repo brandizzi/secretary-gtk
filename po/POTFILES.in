@@ -1,0 +1,3 @@
+# List of source files which contain translatable strings.
+secretary-gtk-widget.c
+secretary-gtk-utils.c

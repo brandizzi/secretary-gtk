@@ -1,9 +1,16 @@
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <secretary/notebook.h>
-#include <secretary-gtk-widget.h>
-#include <secretary-gtk-utils.h>
+
+#include "secretary-gtk-widget.h"
+#include "secretary-gtk-utils.h"
+#include "secretary-gtk-gettext.h"
 
 int main(int argc, char *argv[]) {
+    setlocale(LC_ALL, "");
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    textdomain(PACKAGE);
     gtk_init(&argc, &argv);
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     

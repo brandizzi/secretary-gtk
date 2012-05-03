@@ -1,0 +1,6 @@
+DOMAIN = $(PACKAGE)
+top_builddir = ..
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
+COPYRIGHT_HOLDER = Adam Victor Nazareth Brandizzi
+MSGID_BUGS_ADDRESS = $(PACKAGE_BUGREPORT)
+EXTRA_LOCALE_CATEGORIES =

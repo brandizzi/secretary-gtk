@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include "secretary-gtk-widget.h"
 #include "secretary-gtk-toolbar.h"
 #include "secretary-gtk-gettext.h"
