@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: secretary-gtk 0.1.1dev\n"
 "Report-Msgid-Bugs-To: brandizzi@gmail.com\n"
-"POT-Creation-Date: 2012-05-03 01:49-0300\n"
+"POT-Creation-Date: 2012-05-03 20:42-0300\n"
 "PO-Revision-Date: 2012-05-03 01:35-0300\n"
 "Last-Translator: Adam Victor Nazareth Brandizzi <adam.brandizzi@cds.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,11 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: secretary-gtk-widget.c:12
-msgid "Oh, are you kidding me?"
-msgstr "Ah, você tá de brincadeira, né?"
-
 #: secretary-gtk-utils.c:8
 #, c-format
 msgid "My notebook is %s\n"
 msgstr "Meu bloquinho é %s\n"
+
+#: secretary-gtk-project-treeview.c:11
+msgid "Perspective"
+msgstr "Perspectiva"
+
+#: secretary-gtk-task-listview.c:14
+msgid "Done"
+msgstr "Feito"
+
+#: secretary-gtk-task-listview.c:17
+msgid "Description"
+msgstr "Descrição"
+
+#: secretary-gtk-task-listview.c:20
+msgid "Project"
+msgstr "Projeto"
+
+#: secretary-gtk-task-listview.c:23
+msgid "Scheduled to"
+msgstr "Agendado para"

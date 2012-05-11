@@ -1,3 +1,5 @@
 # List of source files which contain translatable strings.
 secretary-gtk-widget.c
 secretary-gtk-utils.c
+secretary-gtk-project-treeview.c
+secretary-gtk-task-listview.c

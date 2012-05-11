@@ -11,7 +11,9 @@ int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "");
     bindtextdomain(PACKAGE, LOCALEDIR);
     textdomain(PACKAGE);
+    
     gtk_init(&argc, &argv);
+    
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     
     Notebook *notebook = notebook_new("/home/adam/.secretary/secretary.notebook");
