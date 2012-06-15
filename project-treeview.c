@@ -19,12 +19,15 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
     
-    gtk_widget_show(treeview);
+    GtkScrolledWindow *window = gtk_scrolled_window_new(NULL,  NULL);
+    gtk_container_add(GTK_CONTAINER(window), treeview);
+    gtk_widget_show(GTK_WIDGET(treeview));
+    gtk_widget_show(GTK_WIDGET(window));
     
     app->project_tree_view = treeview;
     app->project_tree_store = model;
     
     
-    return treeview;
+    return window;
 }
 

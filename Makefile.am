@@ -6,7 +6,7 @@ secretary_SOURCES = secretary.c gettext.h \
         panel.h panel.c \
         project-treeview.h project-treeview.c \
         project-tree-model.c project-tree-model.h \
-        task-listview.h task-listview.c \
+        task-listview.h task-listview.c task-tree-model.h task-tree-model.c \
         utils.h utils.c \
         application.h application.c \
         gettext.h
