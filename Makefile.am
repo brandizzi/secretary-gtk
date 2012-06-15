@@ -8,6 +8,7 @@ secretary_SOURCES = secretary.c secretary-gtk-gettext.h \
         secretary-gtk-project-tree-model.c secretary-gtk-project-tree-model.h \
         secretary-gtk-task-listview.h secretary-gtk-task-listview.c \
         secretary-gtk-utils.h secretary-gtk-utils.c \
+        secretary-gtk-application.h secretary-gtk-application.c \
         gettext.h
 secretary_CFLAGS = @GTK_CFLAGS@ @SECRETARY_CFLAGS@
 secretary_LDADD = @GTK_LIBS@ @SECRETARY_LIBS@
@@ -28,3 +29,5 @@ TESTS = runtests
 
 test: check
 
+clean-local:
+	-rm *~

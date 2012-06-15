@@ -1,10 +1,10 @@
 #include "config.h"
 
-#include "secretary-gtk-task-listview.h"
-#include "secretary-gtk-gettext.h"
+#include "secretary-gtk/task-listview.h"
+#include "secretary-gtk/gettext.h"
 
 
-GtkWidget *sct_gtk_task_listview_new(Secretary *secretary) {
+GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
     GtkCellRenderer *done_renderer = gtk_cell_renderer_toggle_new(),
             *description_renderer = gtk_cell_renderer_text_new(),
@@ -23,6 +23,8 @@ GtkWidget *sct_gtk_task_listview_new(Secretary *secretary) {
             _("Scheduled to"), date_renderer, "text",  
             SCT_GTK_TASK_DATE_COLUMN, NULL);
     gtk_widget_show(treeview);
+    
+    app->task_list_view = treeview;
     return treeview;
 }
 

@@ -1,5 +1,5 @@
-#include "secretary-gtk-utils.h"
-#include "secretary-gtk-gettext.h"
+#include "secretary-gtk/utils.h"
+#include "secretary-gtk/gettext.h"
 
 #include <secretary/notebook.h>
 

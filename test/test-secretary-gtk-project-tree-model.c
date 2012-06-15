@@ -1,5 +1,5 @@
-#include "test/test-secretary-gtk-project-tree-model.h"
-#include "secretary-gtk-project-tree-model.h"
+#include "test/test-secretary-gtk/project-tree-model.h"
+#include "secretary-gtk/project-tree-model.h"
 
 static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
     Secretary *secretary = secretary_new();
