@@ -6,18 +6,22 @@
 
 typedef struct {
     Notebook *notebook;
-    GtkTreeModel *project_tree_store, 
+    Secretary *secretary;
+    GtkTreeModel 
+            *project_tree_store, 
             *task_list_store;
-    GtkWidget *widget, 
+    GtkWidget 
+            *widget, 
             *project_tree_view, 
             *task_list_view;
-    GtkToolItem *add_project_button, 
+    GtkToolItem 
+            *add_project_button, 
             *remove_project_button, 
             *add_task_button, 
             *remove_task_button;
 } SctGtkApplication;
 
 
-SctGtkApplication *sct_gtk_application_new(void);
+SctGtkApplication *sct_gtk_application_new(Notebook *notebook);
 
 #endif /* _SECRETARY_GTK_APPLICATION */

@@ -11,10 +11,11 @@ int main(int argc, char *argv[]) {
     bindtextdomain(PACKAGE, LOCALEDIR);
     textdomain(PACKAGE);
     
+    Notebook *notebook = notebook_new("/home/adam/.secretary/secretary.notebook");
     gtk_init(&argc, &argv);
     
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    SctGtkApplication *app = sct_gtk_application_new();
+    SctGtkApplication *app = sct_gtk_application_new(notebook);
     gtk_container_add(GTK_CONTAINER(window), app->widget);
     gtk_widget_show(window);
     
