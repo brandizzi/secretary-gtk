@@ -18,6 +18,8 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     GtkTreeModel *model = sct_gtk_project_tree_model_new(secretary);
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
+
+    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), FALSE);
     
     GtkScrolledWindow *window = gtk_scrolled_window_new(NULL,  NULL);
     gtk_container_add(GTK_CONTAINER(window), treeview);
