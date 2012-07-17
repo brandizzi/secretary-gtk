@@ -3,6 +3,7 @@
 #include "secretary-gtk/project-treeview.h"
 #include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/task-tree-model.h"
+#include "secretary-gtk/task-listview.h"
 #include "secretary-gtk/gettext.h"
 
 static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data);
@@ -52,15 +53,13 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
     gchar *path_str = gtk_tree_model_get_string_from_iter(model, &iter);
     
     if (strncmp(path_str, SCT_GTK_PROJECT_PATH_INBOX, 3) == 0) {
-        GtkTreeView *task_treeview = GTK_TREE_VIEW(app->task_list_view);
-        GtkListStore *store = GTK_LIST_STORE(
-                gtk_tree_view_get_model(GTK_TREE_VIEW(task_treeview)));
-        g_object_ref(store);
-        gtk_tree_view_set_model(GTK_TREE_VIEW(task_treeview), NULL);
-        sct_gtk_task_tree_model_show_inbox(store, app->secretary);
-        gtk_tree_view_set_model(
-                GTK_TREE_VIEW(task_treeview), GTK_TREE_MODEL(store));
-        g_object_unref(store);
+        sct_gtk_task_listview_change_content(
+                GTK_TREE_VIEW(app->task_list_view), app->secretary, 
+                sct_gtk_task_tree_model_show_inbox, NULL);
+    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED, 3) == 0) {
+        sct_gtk_task_listview_change_content(
+                GTK_TREE_VIEW(app->task_list_view), app->secretary, 
+                sct_gtk_task_tree_model_show_scheduled, NULL);
     }
     g_free(path_str);
 }

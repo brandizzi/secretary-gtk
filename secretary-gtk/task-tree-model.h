@@ -13,8 +13,12 @@ enum {
 };
 
 GtkListStore *sct_gtk_task_tree_model_new(SctGtkApplication *app);
-void sct_gtk_task_tree_model_show_inbox(GtkListStore *model, 
-        Secretary *secretary);
+
+void sct_gtk_task_tree_model_show_inbox(
+        GtkListStore *model, Secretary *secretary, void *ignored_data);
+void sct_gtk_task_tree_model_show_scheduled(
+        GtkListStore *model, Secretary *secretary, void *ignored_data);
+        
 void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREE_MODEL_H */

@@ -40,3 +40,16 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
     return window;
 }
 
+void sct_gtk_task_listview_change_content(
+        GtkTreeView *task_treeview, Secretary *secretary, 
+        SctGtkChangeTaskListViewContentCallback *callback, void *data) {
+    GtkListStore *store = GTK_LIST_STORE(
+            gtk_tree_view_get_model(GTK_TREE_VIEW(task_treeview)));
+    g_object_ref(store);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(task_treeview), NULL);
+    callback(store, secretary, data);
+    gtk_tree_view_set_model(
+            GTK_TREE_VIEW(task_treeview), GTK_TREE_MODEL(store));
+    g_object_unref(store);
+}
+

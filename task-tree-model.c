@@ -12,11 +12,22 @@ GtkListStore *sct_gtk_task_tree_model_new(SctGtkApplication *app) {
     return model;
 }
 
-void sct_gtk_task_tree_model_show_inbox(GtkListStore *model, Secretary *secretary) {
+void sct_gtk_task_tree_model_show_inbox(
+        GtkListStore *model, Secretary *secretary, void *ignored_data) {
     int n_tasks = secretary_count_inbox_tasks(secretary, false);
     gtk_list_store_clear(model);
     for (int i = 0; i < n_tasks; i++) {
         Task *task = secretary_get_nth_inbox_task(secretary, i, false);
+        sct_gtk_task_tree_model_add_task(model, task);
+    }
+}
+
+void sct_gtk_task_tree_model_show_scheduled(
+        GtkListStore *model, Secretary *secretary, void *ignored_data) {
+    int n_tasks = secretary_count_tasks_scheduled(secretary, false);
+    gtk_list_store_clear(model);
+    for (int i = 0; i < n_tasks; i++) {
+        Task *task = secretary_get_nth_task_scheduled(secretary, i, false);
         sct_gtk_task_tree_model_add_task(model, task);
     }
 }
