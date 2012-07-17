@@ -24,5 +24,7 @@ typedef struct {
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook);
 void sct_gtk_application_free(SctGtkApplication *application);
+void sct_gtk_application_select_path_on_project_treeview(
+        SctGtkApplication *app, const gchar *path);
 
 #endif /* _SECRETARY_GTK_APPLICATION */

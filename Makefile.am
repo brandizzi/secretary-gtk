@@ -22,7 +22,8 @@ runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	test/test-project-tree-model.c \
 	test/test-project-tree-model.h \
 	test/test-application.c \
-	test/test-application.h 
+	test/test-application.h \
+	test/test-utils.c test/test-secretary-gtk/test-utils.h
 runtests_CFLAGS = @GTK_CFLAGS@ @SECRETARY_CFLAGS@
 runtests_LDADD = @GTK_LIBS@ @SECRETARY_LIBS@
 

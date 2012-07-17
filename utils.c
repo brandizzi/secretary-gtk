@@ -9,3 +9,4 @@ GtkWidget *sct_gtk_quit(GtkWidget *widget, GdkEvent *event, gpointer data) {
     gtk_main_quit();
     return FALSE;
 }
+
