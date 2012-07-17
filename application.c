@@ -8,3 +8,7 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
     sct_gtk_widget_new(app);
     return app;
 }
+
+void sct_gtk_application_free(SctGtkApplication *application) {
+ // TODO
+}

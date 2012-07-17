@@ -2,8 +2,10 @@
 
 #include "secretary-gtk/project-treeview.h"
 #include "secretary-gtk/project-tree-model.h"
+#include "secretary-gtk/task-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
+static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data);
 
 GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
@@ -15,13 +17,15 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     
     Secretary *secretary = notebook_get_secretary(app->notebook);
     
-    GtkTreeModel *model = sct_gtk_project_tree_model_new(secretary);
+    GtkTreeModel *model = 
+            GTK_TREE_MODEL(sct_gtk_project_tree_model_new(secretary));
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
 
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), FALSE);
     
-    GtkScrolledWindow *window = gtk_scrolled_window_new(NULL,  NULL);
+    GtkScrolledWindow *window =
+            GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL,  NULL));
     gtk_container_add(GTK_CONTAINER(window), treeview);
     gtk_widget_show(GTK_WIDGET(treeview));
     gtk_widget_show(GTK_WIDGET(window));
@@ -29,7 +33,35 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     app->project_tree_view = treeview;
     app->project_tree_store = model;
     
+    g_signal_connect(G_OBJECT(treeview), "cursor-changed", 
+            G_CALLBACK(_on_cursor_changed), app);
     
-    return window;
+    return GTK_WIDGET(window);
+}
+
+static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
+    SctGtkApplication *app = data;
+    
+    GtkTreeSelection *selection =
+            gtk_tree_view_get_selection(project_treeview);
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+    gtk_tree_selection_get_selected(selection, &model, &iter);
+    
+//    gtk_tree_model_get (model, iter, 0, &place_string_here, -1)
+    gchar *path_str = gtk_tree_model_get_string_from_iter(model, &iter);
+    
+    if (strncmp(path_str, SCT_GTK_PROJECT_PATH_INBOX, 3) == 0) {
+        GtkTreeView *task_treeview = GTK_TREE_VIEW(app->task_list_view);
+        GtkListStore *store = GTK_LIST_STORE(
+                gtk_tree_view_get_model(GTK_TREE_VIEW(task_treeview)));
+        g_object_ref(store);
+        gtk_tree_view_set_model(GTK_TREE_VIEW(task_treeview), NULL);
+        sct_gtk_task_tree_model_show_inbox(store, app->secretary);
+        gtk_tree_view_set_model(
+                GTK_TREE_VIEW(task_treeview), GTK_TREE_MODEL(store));
+        g_object_unref(store);
+    }
+    g_free(path_str);
 }
 

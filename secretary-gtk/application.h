@@ -23,5 +23,6 @@ typedef struct {
 
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook);
+void sct_gtk_application_free(SctGtkApplication *application);
 
 #endif /* _SECRETARY_GTK_APPLICATION */
