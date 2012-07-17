@@ -10,7 +10,8 @@ enum {
 };
 
 #define SCT_GTK_PROJECT_PATH_INBOX "0"
-#define SCT_GTK_PROJECT_PATH_SCHEDULED "1"
+#define SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY "1"
+#define SCT_GTK_PROJECT_PATH_SCHEDULED "2"
 
 GtkTreeStore *sct_gtk_project_tree_model_new(Secretary *secretary);
 

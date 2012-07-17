@@ -60,6 +60,11 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_scheduled, NULL);
+    }  else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY, 3)
+             == 0) {
+        sct_gtk_task_listview_change_content(
+                GTK_TREE_VIEW(app->task_list_view), app->secretary, 
+                sct_gtk_task_tree_model_show_scheduled_for_today, NULL);
     }
     g_free(path_str);
 }
