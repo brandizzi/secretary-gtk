@@ -24,14 +24,14 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
             _("Scheduled to"), date_renderer, "text",  
             SCT_GTK_TASK_DATE_COLUMN, NULL);
     
-    GtkTreeModel *model = sct_gtk_task_tree_model_new(app);
+    GtkTreeModel *model = GTK_TREE_MODEL(sct_gtk_task_tree_model_new(app));
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
     
-    GtkScrolledWindow *window = gtk_scrolled_window_new(NULL,  NULL);
+    GtkWidget *window = gtk_scrolled_window_new(NULL,  NULL);
     gtk_container_add(GTK_CONTAINER(window), treeview);
     gtk_widget_show(GTK_WIDGET(treeview));
-    gtk_widget_show(GTK_WIDGET(window));
+    gtk_widget_show(window);
     
 
     app->task_list_store = model;

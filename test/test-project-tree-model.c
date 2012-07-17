@@ -6,7 +6,8 @@ static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
     Secretary *secretary = secretary_new();
     Project *p1 = secretary_create_project(secretary, "My project"),
             *p2 = secretary_create_project(secretary, "Your project");
-    GtkTreeModel *model = sct_gtk_project_tree_model_new(secretary);
+    GtkTreeModel *model = 
+            GTK_TREE_MODEL(sct_gtk_project_tree_model_new(secretary));
     GtkTreeIter iter, child;
     gchar *name;
     

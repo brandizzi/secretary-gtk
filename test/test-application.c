@@ -28,7 +28,7 @@ static void test_sct_gtk_app_select_inbox(CuTest *test) {
             gtk_tree_view_get_selection(project_tree_view);
     gtk_tree_selection_select_iter(selection, &iter);
     // emiting signal
-    gtk_signal_emit_by_name(project_tree_view, "cursor-changed");
+    gtk_signal_emit_by_name(GTK_OBJECT(project_tree_view), "cursor-changed");
 
     // Evaluating results
     GtkTreeModel *task_store = GTK_TREE_MODEL(app->task_list_store);

@@ -1,4 +1,5 @@
 #include "secretary-gtk/application.h"
+#include "secretary-gtk/widget.h"
 #include <string.h>
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {

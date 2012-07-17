@@ -1,7 +1,7 @@
 #include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
-GtkWidget *sct_gtk_project_tree_model_new(Secretary *secretary) {
+GtkTreeStore *sct_gtk_project_tree_model_new(Secretary *secretary) {
     GtkTreeStore *model = gtk_tree_store_new(SCT_GTK_PROJECT_COLUMN_COUNT,
             G_TYPE_STRING);
     GtkTreeIter iter, child;
