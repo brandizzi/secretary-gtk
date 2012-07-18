@@ -26,6 +26,7 @@ void sct_gtk_application_select_path_on_project_treeview(
     GtkTreeSelection *selection =
             gtk_tree_view_get_selection(project_tree_view);
     gtk_tree_selection_select_iter(selection, &iter);
+    
     // emiting signal
     gtk_signal_emit_by_name(GTK_OBJECT(project_tree_view), "cursor-changed");
 }

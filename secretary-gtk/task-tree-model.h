@@ -20,6 +20,8 @@ void sct_gtk_task_tree_model_show_scheduled(
         GtkListStore *model, Secretary *secretary, void *ignored_data);
 void sct_gtk_task_tree_model_show_scheduled_for_today(
         GtkListStore *model, Secretary *secretary, void *ignored_data);
+void sct_gtk_task_tree_model_show_project(
+        GtkListStore *model, Secretary *secretary, void *data);
         
 void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
 

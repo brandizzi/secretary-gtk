@@ -34,6 +34,9 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     app->project_tree_view = treeview;
     app->project_tree_store = model;
     
+    gtk_tree_view_expand_row(GTK_TREE_VIEW(treeview), 
+            gtk_tree_path_new_from_string("3"), TRUE);
+    
     g_signal_connect(G_OBJECT(treeview), "cursor-changed", 
             G_CALLBACK(_on_cursor_changed), app);
     
@@ -47,11 +50,10 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
             gtk_tree_view_get_selection(project_treeview);
     GtkTreeIter iter;
     GtkTreeModel *model;
-    gtk_tree_selection_get_selected(selection, &model, &iter);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) return;
     
-//    gtk_tree_model_get (model, iter, 0, &place_string_here, -1)
     gchar *path_str = gtk_tree_model_get_string_from_iter(model, &iter);
-    
+
     if (strncmp(path_str, SCT_GTK_PROJECT_PATH_INBOX, 3) == 0) {
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
@@ -60,12 +62,20 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_scheduled, NULL);
-    }  else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY, 3)
+    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY, 3)
              == 0) {
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_scheduled_for_today, NULL);
+    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_PROJECT(0), 1) == 0) {
+        GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+        gint *indices = gtk_tree_path_get_indices(path);
+        Project *project = secretary_get_nth_project(app->secretary, indices[1]);
+        sct_gtk_task_listview_change_content(
+                GTK_TREE_VIEW(app->task_list_view), app->secretary, 
+                sct_gtk_task_tree_model_show_project, project);
     }
+    
     g_free(path_str);
 }
 

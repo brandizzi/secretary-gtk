@@ -43,6 +43,17 @@ void sct_gtk_task_tree_model_show_scheduled(
     }
 }
 
+void sct_gtk_task_tree_model_show_project(
+        GtkListStore *model, Secretary *secretary, void *data) {
+    Project *project = data;
+    int n_tasks = project_count_tasks(project, false);
+    gtk_list_store_clear(model);
+    for (int i = 0; i < n_tasks; i++) {
+        Task *task = project_get_nth_task(project, i, false);
+        sct_gtk_task_tree_model_add_task(model, task);
+    }
+}
+
 void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task) {
     GtkTreeIter iter;
     gtk_list_store_append(model, &iter);
