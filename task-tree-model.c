@@ -8,7 +8,7 @@ GtkListStore *sct_gtk_task_tree_model_new(SctGtkApplication *app) {
     GtkListStore *model = gtk_list_store_new(SCT_GTK_TASK_COLUMN_COUNT,
             G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
     Secretary *secretary = notebook_get_secretary(app->notebook);
-    _sct_gtk_task_tree_model_show_all(model, secretary);
+    //_sct_gtk_task_tree_model_show_all(model, secretary);
     return model;
 }
 

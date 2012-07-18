@@ -1,5 +1,6 @@
 #include "secretary-gtk/application.h"
 #include "secretary-gtk/widget.h"
+#include "secretary-gtk/project-tree-model.h"
 #include <string.h>
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
@@ -7,6 +8,10 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
     app->notebook = notebook;
     app->secretary = notebook_get_secretary(notebook);
     sct_gtk_widget_new(app);
+    
+    sct_gtk_application_select_path_on_project_treeview(
+            app, SCT_GTK_PROJECT_PATH_INBOX);
+
     return app;
 }
 

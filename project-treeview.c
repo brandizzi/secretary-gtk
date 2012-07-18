@@ -39,7 +39,7 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     
     g_signal_connect(G_OBJECT(treeview), "cursor-changed", 
             G_CALLBACK(_on_cursor_changed), app);
-    
+                
     return GTK_WIDGET(window);
 }
 
