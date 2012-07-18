@@ -168,7 +168,9 @@ static void test_sct_gtk_app_select_project_should_not_crash(CuTest *test) {
             
             
     SctGtkApplication *app = sct_gtk_application_new(notebook);
-   
+    // Polluting
+    GtkTreePath *path = gtk_tree_path_new_from_string("3:1234");
+    gint *indices = gtk_tree_path_get_indices(path);
     // Selecting scheduled for today tasks
     sct_gtk_application_select_path_on_project_treeview(app, 
             SCT_GTK_PROJECT_PATH_PROJECT);
