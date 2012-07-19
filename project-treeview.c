@@ -45,7 +45,7 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
 
 static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
     SctGtkApplication *app = data;
-    
+
     GtkTreeSelection *selection =
             gtk_tree_view_get_selection(project_treeview);
     GtkTreeIter iter;
@@ -75,6 +75,8 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_project, project);
     } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_PROJECT, 2) == 0) {
+        GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+        gtk_tree_view_expand_row(GTK_TREE_VIEW(project_treeview), path, TRUE);
         sct_gtk_application_select_path_on_project_treeview(
                 app, SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
     }
