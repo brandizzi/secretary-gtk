@@ -3,7 +3,6 @@
 #include <gtk/gtk.h>
 
 #include "secretary-gtk/application.h"
-#include "secretary-gtk/utils.h"
 #include "secretary-gtk/gettext.h"
 
 int main(int argc, char *argv[]) {
@@ -12,15 +11,12 @@ int main(int argc, char *argv[]) {
     textdomain(PACKAGE);
     
     Notebook *notebook = notebook_new("/home/adam/.secretary/secretary.notebook");
+    
     gtk_init(&argc, &argv);
     
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     SctGtkApplication *app = sct_gtk_application_new(notebook);
-    gtk_container_add(GTK_CONTAINER(window), app->widget);
-    gtk_widget_show(window);
     
-    g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(sct_gtk_quit),
-            app->notebook);
+    gtk_widget_show(app->main_window);
     
     gtk_main();
     return 0;

@@ -13,7 +13,8 @@ typedef struct {
     GtkWidget 
             *widget, 
             *project_tree_view, 
-            *task_list_view;
+            *task_list_view,
+            *main_window;
     GtkToolItem 
             *add_project_button, 
             *remove_project_button, 
