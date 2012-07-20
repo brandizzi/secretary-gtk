@@ -52,35 +52,38 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
     GtkTreeModel *model;
     if (!gtk_tree_selection_get_selected(selection, &model, &iter)) return;
     
-    gchar *path_str = gtk_tree_model_get_string_from_iter(model, &iter);
-
-    if (strncmp(path_str, SCT_GTK_PROJECT_PATH_INBOX, 2) == 0) {
+    GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
+    gint *indices = gtk_tree_path_get_indices(path);
+    switch (indices[0]) {
+    case SCT_GTK_PROJECT_INDEX_INBOX:
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_inbox, NULL);
-    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED, 2) == 0) {
+        break;
+    case SCT_GTK_PROJECT_INDEX_SCHEDULED:
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_scheduled, NULL);
-    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY, 2)
-             == 0) {
+        break;
+    case SCT_GTK_PROJECT_INDEX_SCHEDULED_FOR_TODAY:
         sct_gtk_task_listview_change_content(
                 GTK_TREE_VIEW(app->task_list_view), app->secretary, 
                 sct_gtk_task_tree_model_show_scheduled_for_today, NULL);
-    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_NTH_PROJECT(0), 2) == 0) {
-        GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-        gint *indices = gtk_tree_path_get_indices(path);
-        Project *project = secretary_get_nth_project(app->secretary, indices[1]);
-        sct_gtk_task_listview_change_content(
-                GTK_TREE_VIEW(app->task_list_view), app->secretary, 
-                sct_gtk_task_tree_model_show_project, project);
-    } else if (strncmp(path_str, SCT_GTK_PROJECT_PATH_PROJECT, 2) == 0) {
-        GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-        gtk_tree_view_expand_row(GTK_TREE_VIEW(project_treeview), path, TRUE);
-        sct_gtk_application_select_path_on_project_treeview(
-                app, SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
-    }
-    
-    g_free(path_str);
+        break;
+    case SCT_GTK_PROJECT_INDEX_PROJECT:
+        if (gtk_tree_path_get_depth(path) == 1) {
+            gtk_tree_view_expand_row(
+                    GTK_TREE_VIEW(project_treeview), path, TRUE);
+            sct_gtk_application_select_path_on_project_treeview(
+                    app, SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
+        } else {
+            Project *project = secretary_get_nth_project(
+                    app->secretary, indices[1]);
+            sct_gtk_task_listview_change_content(
+                    GTK_TREE_VIEW(app->task_list_view), app->secretary, 
+                    sct_gtk_task_tree_model_show_project, project);
+        }
+        break;
+    } 
 }
 
