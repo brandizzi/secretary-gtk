@@ -51,6 +51,7 @@ static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
 CuSuite *test_sct_gtk_project_tree_model_suite(void) {
     CuSuite *suite  = CuSuiteNew();
     SUITE_ADD_TEST(suite, test_sct_gtk_project_tree_model_copy_projects);
+    return suite;
 }
 
 

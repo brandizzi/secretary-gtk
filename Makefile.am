@@ -9,6 +9,7 @@ secretary_module_srcs =	widget.h widget.c \
 	task-tree-model.h task-tree-model.c \
 	utils.h utils.c \
 	application.h application.c \
+	new-task-dialog.h new-task-dialog.c \
 	gettext.h
 secretary_SOURCES = secretary.c \
 	$(secretary_module_srcs)
@@ -20,10 +21,9 @@ LDADD = $(LIBINTL)
 runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	$(secretary_module_srcs) \
 	test/test-project-tree-model.c \
-	test/test-project-tree-model.h \
 	test/test-application.c \
-	test/test-application.h \
-	test/test-utils.c test/test-secretary-gtk/test-utils.h
+	test/test-new-task-dialog.c \
+	test/test-utils.c
 runtests_CFLAGS = @GTK_CFLAGS@ @SECRETARY_CFLAGS@
 runtests_LDADD = @GTK_LIBS@ @SECRETARY_LIBS@
 
