@@ -14,6 +14,8 @@ static void test_sct_gtk_new_task_dialog_create_task(CuTest *test) {
     
     CuAssertIntEquals(test, secretary_count_tasks(secretary, false), 1);
     CuAssertPtrEquals(test, task, secretary_get_nth_task(secretary, 0));
+    CuAssertTrue(test, !task_is_scheduled(task));
+    CuAssertTrue(test, !task_has_project(task));
 }
 
 CuSuite *test_sct_gtk_new_task_dialog_suite(void) {
