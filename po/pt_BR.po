@@ -23,21 +23,19 @@ msgstr "Perspectiva"
 
 #: project-tree-model.c:12
 msgid "Inbox"
-msgstr ""
+msgstr "Caixa de entrda"
 
 #: project-tree-model.c:15
 msgid "For today"
-msgstr ""
+msgstr "Para hoje"
 
 #: project-tree-model.c:18
-#, fuzzy
 msgid "Scheduled"
-msgstr "Agendado para"
+msgstr "Agendadas"
 
 #: project-tree-model.c:21
-#, fuzzy
 msgid "Projects"
-msgstr "Projeto"
+msgstr "Projetos"
 
 #: task-listview.c:15
 msgid "Done"
@@ -53,7 +51,7 @@ msgstr "Projeto"
 
 #: task-listview.c:24
 msgid "Scheduled to"
-msgstr "Agendado para"
+msgstr "Agendada para"
 
 #: utils.c:10
 #, c-format
@@ -62,4 +60,4 @@ msgstr "Meu bloquinho é %s\n"
 
 #: new-task-dialog.c:17 new-task-dialog.c:22
 msgid "New task"
-msgstr ""
+msgstr "Nova tarefa"
