@@ -10,7 +10,7 @@ secretary_module_srcs =	secretary-gtk/widget.h widget.c \
 	secretary-gtk/utils.h utils.c \
 	secretary-gtk/application.h application.c \
 	secretary-gtk/new-task-dialog.h new-task-dialog.c \
-	gettext.h
+	gettext.h secretary-gtk/gettext.h
 secretary_SOURCES = secretary.c \
 	$(secretary_module_srcs)
 
