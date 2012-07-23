@@ -1,6 +1,6 @@
 #ifndef _SECRETARY_GTK_NEW_TASK_DIALOG_H
 # define _SECRETARY_GTK_NEW_TASK_DIALOG_H
-
+#define _XOPEN_SOURCE
 #include <gtk/gtk.h>
 #include <secretary/secretary.h>
 
@@ -8,7 +8,10 @@
 
 typedef struct {
     Secretary *secretary;
-    GtkWidget *description_entry;
+    GtkWidget *description_entry,
+            *scheduled_for_calendar,
+            *scheduled_for_entry,
+            *calendar_window;
 } SctGtkNewTaskDialogStruct;
 
 SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
@@ -20,4 +23,3 @@ GtkWidget *sct_gtk_new_task_dialog_new(
         Secretary *secretary, GtkWindow *parent);
 
 #endif /* _SECRETARY_GTK_NEW_TASK_DIALOG_H */
-
