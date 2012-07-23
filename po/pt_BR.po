@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: secretary-gtk 0.1.1dev\n"
 "Report-Msgid-Bugs-To: brandizzi@gmail.com\n"
-"POT-Creation-Date: 2012-05-03 20:42-0300\n"
+"POT-Creation-Date: 2012-07-23 15:42-0300\n"
 "PO-Revision-Date: 2012-05-03 01:35-0300\n"
 "Last-Translator: Adam Victor Nazareth Brandizzi <adam.brandizzi@cds.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,27 +17,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: secretary-gtk-utils.c:8
+#: project-treeview.c:15
+msgid "Perspective"
+msgstr "Perspectiva"
+
+#: project-tree-model.c:12
+msgid "Inbox"
+msgstr ""
+
+#: project-tree-model.c:15
+msgid "For today"
+msgstr ""
+
+#: project-tree-model.c:18
+#, fuzzy
+msgid "Scheduled"
+msgstr "Agendado para"
+
+#: project-tree-model.c:21
+#, fuzzy
+msgid "Projects"
+msgstr "Projeto"
+
+#: task-listview.c:15
+msgid "Done"
+msgstr "Feito"
+
+#: task-listview.c:18
+msgid "Description"
+msgstr "Descrição"
+
+#: task-listview.c:21
+msgid "Project"
+msgstr "Projeto"
+
+#: task-listview.c:24
+msgid "Scheduled to"
+msgstr "Agendado para"
+
+#: utils.c:10
 #, c-format
 msgid "My notebook is %s\n"
 msgstr "Meu bloquinho é %s\n"
 
-#: secretary-gtk-project-treeview.c:11
-msgid "Perspective"
-msgstr "Perspectiva"
-
-#: secretary-gtk-task-listview.c:14
-msgid "Done"
-msgstr "Feito"
-
-#: secretary-gtk-task-listview.c:17
-msgid "Description"
-msgstr "Descrição"
-
-#: secretary-gtk-task-listview.c:20
-msgid "Project"
-msgstr "Projeto"
-
-#: secretary-gtk-task-listview.c:23
-msgid "Scheduled to"
-msgstr "Agendado para"
+#: new-task-dialog.c:17 new-task-dialog.c:22
+msgid "New task"
+msgstr ""
