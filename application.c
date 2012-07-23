@@ -1,4 +1,4 @@
-#import "config.h"
+#include "config.h"
 
 #include "secretary-gtk/application.h"
 #include "secretary-gtk/widget.h"

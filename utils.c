@@ -1,4 +1,4 @@
-#import "config.h"
+#include "config.h"
 
 #include "secretary-gtk/utils.h"
 #include "secretary-gtk/gettext.h"

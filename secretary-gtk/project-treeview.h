@@ -1,7 +1,7 @@
 #ifndef _SECRETARY_GTK_PROJECT_TREEVIEW_H
 # define _SECRETARY_GTK_PROJECT_TREEVIEW_H
 
-#import "config.h"
+#include "config.h"
 
 #include <gtk/gtk.h>
 #include <secretary/secretary.h>

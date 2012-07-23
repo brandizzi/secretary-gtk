@@ -1,7 +1,7 @@
 #ifndef _SECRETARY_GTK_TASK_TREE_MODEL_H
 # define _SECRETARY_GTK_TASK_TREE_MODEL_H
 
-#import "config.h"
+#include "config.h"
 
 #include <gtk/gtk.h>
 #include <secretary-gtk/application.h>

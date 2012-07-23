@@ -1,7 +1,7 @@
 #ifndef _SECRETARY_GTK_APPLICATION
 # define _SECRETARY_GTK_APPLICATION
 
-#import "config.h"
+#include "config.h"
 
 #include <secretary/notebook.h>
 #include <gtk/gtk.h>

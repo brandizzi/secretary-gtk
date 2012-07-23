@@ -1,4 +1,4 @@
-#import "config.h"
+#include "config.h"
 
 #include "secretary-gtk/task-tree-model.h"
 

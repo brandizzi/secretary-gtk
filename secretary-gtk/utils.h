@@ -1,7 +1,7 @@
 #ifndef _SECRETARY_GTK_UTILS_H
 # define _SECRETARY_GTK_UTILS_H
 
-#import "config.h"
+#include "config.h"
 
 #include <gtk/gtk.h>
 
