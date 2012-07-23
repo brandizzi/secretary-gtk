@@ -1,6 +1,5 @@
 #ifndef _SECRETARY_GTK_NEW_TASK_DIALOG_H
 # define _SECRETARY_GTK_NEW_TASK_DIALOG_H
-#define _XOPEN_SOURCE
 #include <gtk/gtk.h>
 #include <secretary/secretary.h>
 
