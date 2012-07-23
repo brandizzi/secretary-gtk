@@ -1,6 +1,8 @@
 #ifndef _SECRETARY_GTK_TOOLBAR_H
 # define _SECRETARY_GTK_TOOLBAR_H
 
+#import "config.h"
+
 #include <gtk/gtk.h>
 #include <secretary/secretary.h>
 

@@ -1,3 +1,5 @@
+#import "config.h"
+
 #include "secretary-gtk/task-tree-model.h"
 
 #define DATE_SIZE 12

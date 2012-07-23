@@ -1,6 +1,8 @@
 #ifndef _SECRETARY_GTK_WIDGET_H
 # define _SECRETARY_GTK_WIDGET_H
 
+#import "config.h"
+
 #include <secretary/secretary.h>
 #include <gtk/gtk.h>
 

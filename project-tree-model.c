@@ -1,3 +1,5 @@
+#import "config.h"
+
 #include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
