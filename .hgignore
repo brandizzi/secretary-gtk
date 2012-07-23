@@ -53,3 +53,5 @@ po/quot.sed
 po/remove-potcdate.sin
 po/secretary-gtk.pot
 po/stamp-po
+po/remove-potcdate\.sed
+secretary-gtk-.*\.tar\.gz
