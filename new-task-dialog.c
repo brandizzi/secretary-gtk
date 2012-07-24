@@ -14,6 +14,8 @@ static bool on_scheduled_for_calendar_day_selected(
         GtkWidget *calendar, gpointer data);
 static bool on_scheduled_for_calendar_day_selected_double_click(
         GtkWidget *calendar, gpointer data);
+static bool on_scheduled_for_calendar_focus_out_event(
+        GtkWidget *calendar, GdkEvent *event, gpointer data);
 
 GtkWidget *sct_gtk_new_task_dialog_new(
         Secretary *secretary, GtkWindow *parent) {
@@ -67,6 +69,10 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
     g_signal_connect(
             G_OBJECT(ntds->scheduled_for_calendar), "day-selected-double-click",
             G_CALLBACK(on_scheduled_for_calendar_day_selected_double_click),
+            ntds);
+    g_signal_connect(
+            G_OBJECT(ntds->scheduled_for_calendar), "focus-out-event",
+            G_CALLBACK(on_scheduled_for_calendar_focus_out_event),
             ntds);
     ntds->scheduled_for_entry_changed_handler_id = g_signal_connect(
             G_OBJECT(ntds->scheduled_for_entry), "changed",
@@ -130,7 +136,7 @@ static bool on_scheduled_for_entry_changed(
                 ntds->scheduled_for_calendar_day_selected_handler_id);
         gtk_calendar_select_month(
                 GTK_CALENDAR(ntds->scheduled_for_calendar), 
-                date.tm_mon, date.tm_year);
+                date.tm_mon, date.tm_year+1900);
         gtk_calendar_select_day(
                 GTK_CALENDAR(ntds->scheduled_for_calendar), date.tm_mday);
         g_signal_handler_unblock(
@@ -179,6 +185,13 @@ static bool on_scheduled_for_calendar_day_selected_double_click(
     SctGtkNewTaskDialogStruct *ntds = data;
     gtk_widget_hide(ntds->calendar_window);
     gtk_widget_grab_focus(ntds->scheduled_for_entry);
+    return false;
+}
+
+static bool on_scheduled_for_calendar_focus_out_event(
+        GtkWidget *calendar, GdkEvent *event, gpointer data) {
+    SctGtkNewTaskDialogStruct *ntds = data;
+    gtk_widget_hide(ntds->calendar_window);
     return false;
 }
 
