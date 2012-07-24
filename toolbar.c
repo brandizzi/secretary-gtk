@@ -3,6 +3,8 @@
 #include "secretary-gtk/toolbar.h"
 #include "secretary-gtk/gettext.h"
 
+#include "secretary-gtk/new-task-dialog.h"
+
 static void on_new_task_button_clicked(GtkWidget *tool_button, gpointer data);
 
 GtkWidget *sct_gtk_toolbar_new(SctGtkApplication *app) {
@@ -27,6 +29,10 @@ GtkWidget *sct_gtk_toolbar_new(SctGtkApplication *app) {
 
 static void on_new_task_button_clicked(GtkWidget *tool_button, gpointer data) {
     SctGtkApplication *app = data;
-    gtk_dialog_run(GTK_DIALOG(app->new_task_dialog));
+    SctGtkNewTaskDialogStruct *ntds = app->new_task_dialog_struct;
+    gint result = gtk_dialog_run(GTK_DIALOG(app->new_task_dialog));
+    if (result == GTK_RESPONSE_ACCEPT) {
+        sct_gtk_new_task_dialog_struct_create_task(app->new_task_dialog_struct);
+    }
 }
 

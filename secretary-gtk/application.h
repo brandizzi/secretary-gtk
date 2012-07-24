@@ -6,6 +6,7 @@
 #include <secretary/notebook.h>
 #include <gtk/gtk.h>
 
+
 typedef struct {
     Notebook *notebook;
     Secretary *secretary;
@@ -18,6 +19,7 @@ typedef struct {
             *task_list_view,
             *main_window,
             *new_task_dialog;
+    void *new_task_dialog_struct;
     GtkToolItem 
             *add_project_button, 
             *remove_project_button, 

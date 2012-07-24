@@ -53,8 +53,6 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
     gtk_box_pack_end(
             GTK_BOX(scheduled_for_box), scheduled_for_button, TRUE, TRUE, 0);
     
-
-    
     ntds->calendar_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_transient_for(
             GTK_WINDOW(ntds->calendar_window), GTK_WINDOW(ntds->dialog));

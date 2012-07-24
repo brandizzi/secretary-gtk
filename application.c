@@ -19,8 +19,10 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
     
     app->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-    app->new_task_dialog = sct_gtk_new_task_dialog_struct_new(
-        app->secretary, NULL)->dialog;
+    SctGtkNewTaskDialogStruct *new_task_dialog_struct = 
+            sct_gtk_new_task_dialog_struct_new(app->secretary, NULL);
+    app->new_task_dialog_struct = new_task_dialog_struct;
+    app->new_task_dialog = new_task_dialog_struct->dialog;
     gtk_container_add(GTK_CONTAINER(app->main_window), app->widget);
     g_signal_connect(G_OBJECT(app->main_window), "delete-event", 
             G_CALLBACK(sct_gtk_quit), app->notebook);
