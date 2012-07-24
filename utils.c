@@ -12,3 +12,12 @@ GtkWidget *sct_gtk_quit(GtkWidget *widget, GdkEvent *event, gpointer data) {
     return FALSE;
 }
 
+time_t sct_gtk_get_time_from_string(const char *date_string) {
+    struct tm date;
+    date_string = strptime(date_string, "%Y-%m-%d", &date);
+    if (date_string) {
+        return mktime(&date);
+    } else {
+        return SCT_GTK_INVALID_DATE;
+    }
+}

@@ -17,6 +17,8 @@ typedef struct {
             *scheduled_for_entry,
             *calendar_window,
             *dialog;
+    gulong scheduled_for_calendar_day_selected_handler_id,
+            scheduled_for_entry_changed_handler_id;
 } SctGtkNewTaskDialogStruct;
 
 SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(

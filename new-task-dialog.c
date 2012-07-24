@@ -6,6 +6,8 @@
 #include <time.h>
 #include <gtk/gtk.h>
 
+static bool on_scheduled_for_entry_changed(
+        GtkWidget *entry, gpointer data);
 static bool on_scheduled_for_button_clicked(
         GtkWidget *button, gpointer data);
 static bool on_scheduled_for_calendar_day_selected(
@@ -59,13 +61,16 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
     gtk_container_add(
             GTK_CONTAINER(ntds->calendar_window), ntds->scheduled_for_calendar);
 
-    g_signal_connect(
+    ntds->scheduled_for_calendar_day_selected_handler_id = g_signal_connect(
             G_OBJECT(ntds->scheduled_for_calendar), "day-selected",
             G_CALLBACK(on_scheduled_for_calendar_day_selected), ntds);
     g_signal_connect(
             G_OBJECT(ntds->scheduled_for_calendar), "day-selected-double-click",
             G_CALLBACK(on_scheduled_for_calendar_day_selected_double_click),
             ntds);
+    ntds->scheduled_for_entry_changed_handler_id = g_signal_connect(
+            G_OBJECT(ntds->scheduled_for_entry), "changed",
+            G_CALLBACK(on_scheduled_for_entry_changed), ntds);
             
     GtkWidget *table = gtk_table_new(2, 2, TRUE);
     
@@ -112,6 +117,28 @@ Task *sct_gtk_new_task_dialog_struct_create_task(
     return task;
 }
 
+static bool on_scheduled_for_entry_changed(
+        GtkWidget *entry, gpointer data) {
+    SctGtkNewTaskDialogStruct *ntds = data;
+    const char *date_string = gtk_entry_get_text(
+            GTK_ENTRY(ntds->scheduled_for_entry));
+    struct tm date;
+    date_string = strptime(date_string, "%Y-%m-%d", &date);
+    if (date_string) {
+        g_signal_handler_block(
+                ntds->scheduled_for_calendar, 
+                ntds->scheduled_for_calendar_day_selected_handler_id);
+        gtk_calendar_select_month(
+                GTK_CALENDAR(ntds->scheduled_for_calendar), 
+                date.tm_mon, date.tm_year);
+        gtk_calendar_select_day(
+                GTK_CALENDAR(ntds->scheduled_for_calendar), date.tm_mday);
+        g_signal_handler_unblock(
+                ntds->scheduled_for_calendar, 
+                ntds->scheduled_for_calendar_day_selected_handler_id);
+    }
+    return false;
+}
 static bool on_scheduled_for_button_clicked(
         GtkWidget *entry, gpointer data) {
     SctGtkNewTaskDialogStruct *ntds = data;
@@ -137,7 +164,13 @@ static bool on_scheduled_for_calendar_day_selected(
     GDate *date = g_date_new_dmy(day, month+1, year);
     char buffer[12];
     g_date_strftime(buffer, 12, "%Y-%m-%d", date);
+    g_signal_handler_block(
+            ntds->scheduled_for_entry, 
+            ntds->scheduled_for_entry_changed_handler_id);
     gtk_entry_set_text(GTK_ENTRY(ntds->scheduled_for_entry), buffer);
+    g_signal_handler_unblock(
+            ntds->scheduled_for_entry, 
+            ntds->scheduled_for_entry_changed_handler_id);
     return false;
 }
 
