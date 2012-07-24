@@ -5,6 +5,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <stdbool.h>
 #include <secretary/secretary.h>
 
 #include "secretary-gtk/application.h"
@@ -14,7 +15,8 @@ typedef struct {
     GtkWidget *description_entry,
             *scheduled_for_calendar,
             *scheduled_for_entry,
-            *calendar_window;
+            *calendar_window,
+            *dialog;
 } SctGtkNewTaskDialogStruct;
 
 SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(

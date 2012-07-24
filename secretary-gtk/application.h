@@ -16,7 +16,8 @@ typedef struct {
             *widget, 
             *project_tree_view, 
             *task_list_view,
-            *main_window;
+            *main_window,
+            *new_task_dialog;
     GtkToolItem 
             *add_project_button, 
             *remove_project_button, 

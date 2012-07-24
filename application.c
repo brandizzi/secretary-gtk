@@ -4,6 +4,8 @@
 #include "secretary-gtk/widget.h"
 #include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/utils.h"
+#include "secretary-gtk/new-task-dialog.h"
+
 #include <string.h>
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
@@ -16,6 +18,9 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
             app, SCT_GTK_PROJECT_PATH_INBOX);
     
     app->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+    app->new_task_dialog = sct_gtk_new_task_dialog_struct_new(
+        app->secretary, NULL)->dialog;
     gtk_container_add(GTK_CONTAINER(app->main_window), app->widget);
     g_signal_connect(G_OBJECT(app->main_window), "delete-event", 
             G_CALLBACK(sct_gtk_quit), app->notebook);
