@@ -10,6 +10,8 @@ static bool on_scheduled_for_button_clicked(
         GtkWidget *button, gpointer data);
 static bool on_scheduled_for_calendar_day_selected(
         GtkWidget *calendar, gpointer data);
+static bool on_scheduled_for_calendar_day_selected_double_click(
+        GtkWidget *calendar, gpointer data);
 
 GtkWidget *sct_gtk_new_task_dialog_new(
         Secretary *secretary, GtkWindow *parent) {
@@ -60,6 +62,10 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
     g_signal_connect(
             G_OBJECT(ntds->scheduled_for_calendar), "day-selected",
             G_CALLBACK(on_scheduled_for_calendar_day_selected), ntds);
+    g_signal_connect(
+            G_OBJECT(ntds->scheduled_for_calendar), "day-selected-double-click",
+            G_CALLBACK(on_scheduled_for_calendar_day_selected_double_click),
+            ntds);
             
     GtkWidget *table = gtk_table_new(2, 2, TRUE);
     
@@ -132,6 +138,14 @@ static bool on_scheduled_for_calendar_day_selected(
     char buffer[12];
     g_date_strftime(buffer, 12, "%Y-%m-%d", date);
     gtk_entry_set_text(GTK_ENTRY(ntds->scheduled_for_entry), buffer);
+    return false;
+}
+
+static bool on_scheduled_for_calendar_day_selected_double_click(
+        GtkWidget *calendar, gpointer data) {
+    SctGtkNewTaskDialogStruct *ntds = data;
+    gtk_widget_hide(ntds->calendar_window);
+    gtk_widget_grab_focus(ntds->scheduled_for_entry);
     return false;
 }
 
