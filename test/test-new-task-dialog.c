@@ -64,7 +64,7 @@ static void test_sct_gtk_new_task_dialog_create_scheduled_task_from_entry(
     date->tm_mday = 31;
     
     char buffer[12];
-    strftime(buffer, 12, "%Y-%m-%d", date);
+    strftime(buffer, 12, _("%Y-%m-%d"), date);
     gtk_entry_set_text(GTK_ENTRY(ds->description_entry), "My new task");
     gtk_entry_set_text(GTK_ENTRY(ds->scheduled_for_entry), buffer);
     

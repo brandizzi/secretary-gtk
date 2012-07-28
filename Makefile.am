@@ -11,6 +11,8 @@ secretary_module_srcs =	secretary-gtk/widget.h widget.c \
 	secretary-gtk/application.h application.c \
 	secretary-gtk/new-task-dialog.h new-task-dialog.c \
 	secretary-gtk/_internal/new-task-dialog.h \
+	secretary-gtk/date-entry.h date-entry.c \
+	secretary-gtk/_internal/date-entry.h \
 	gettext.h secretary-gtk/gettext.h
 secretary_SOURCES = secretary.c \
 	$(secretary_module_srcs)
@@ -24,7 +26,8 @@ runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	test/test-project-tree-model.c test/test-secretary-gtk/project-tree-model.h \
 	test/test-application.c test/test-secretary-gtk/application.h \
 	test/test-new-task-dialog.c test/test-secretary-gtk/new-task-dialog.h \
-	test/test-utils.c test/test-secretary-gtk/test-utils.h
+	test/test-utils.c test/test-secretary-gtk/test-utils.h \
+	test/test-date-entry.c test/test-secretary-gtk/test-date-entry.h
 runtests_CFLAGS = @GTK_CFLAGS@ @SECRETARY_CFLAGS@
 runtests_LDADD = @GTK_LIBS@ @SECRETARY_LIBS@
 

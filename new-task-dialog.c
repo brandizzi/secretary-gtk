@@ -45,7 +45,7 @@ Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
     const char *date_string = gtk_entry_get_text(
             GTK_ENTRY(ntds->scheduled_for_entry));
     struct tm date;
-    date_string = strptime(date_string, "%Y-%m-%d", &date);
+    date_string = strptime(date_string, _("%Y-%m-%d"), &date);
     if (date_string) {
         secretary_schedule_task(ntds->secretary, task, mktime(&date));
     }
@@ -138,7 +138,7 @@ Task *sct_gtk_new_task_dialog_struct_create_task(
     const char *date_string = gtk_entry_get_text(
             GTK_ENTRY(ntds->scheduled_for_entry));
     struct tm date;
-    date_string = strptime(date_string, "%Y-%m-%d", &date);
+    date_string = strptime(date_string, _("%Y-%m-%d"), &date);
     if (date_string) {
         secretary_schedule_task(ntds->secretary, task, mktime(&date));
     }
@@ -151,7 +151,7 @@ static bool on_scheduled_for_entry_changed(
     const char *date_string = gtk_entry_get_text(
             GTK_ENTRY(ntds->scheduled_for_entry));
     struct tm date;
-    date_string = strptime(date_string, "%Y-%m-%d", &date);
+    date_string = strptime(date_string, _("%Y-%m-%d"), &date);
     if (date_string) {
         g_signal_handler_block(
                 ntds->scheduled_for_calendar, 
@@ -191,7 +191,7 @@ static bool on_scheduled_for_calendar_day_selected(
     gtk_calendar_get_date(GTK_CALENDAR(calendar), &year, &month, &day);
     GDate *date = g_date_new_dmy(day, month+1, year);
     char buffer[12];
-    g_date_strftime(buffer, 12, "%Y-%m-%d", date);
+    g_date_strftime(buffer, 12, _("%Y-%m-%d"), date);
     g_signal_handler_block(
             ntds->scheduled_for_entry, 
             ntds->scheduled_for_entry_changed_handler_id);
