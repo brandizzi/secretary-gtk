@@ -1,3 +1,4 @@
+
 #include "config.h"
 
 #include "secretary-gtk/toolbar.h"
@@ -29,10 +30,9 @@ GtkWidget *sct_gtk_toolbar_new(SctGtkApplication *app) {
 
 static void on_new_task_button_clicked(GtkWidget *tool_button, gpointer data) {
     SctGtkApplication *app = data;
-    SctGtkNewTaskDialogStruct *ntds = app->new_task_dialog_struct;
     gint result = gtk_dialog_run(GTK_DIALOG(app->new_task_dialog));
     if (result == GTK_RESPONSE_ACCEPT) {
-        sct_gtk_new_task_dialog_struct_create_task(app->new_task_dialog_struct);
+        sct_gtk_new_task_dialog_create_task(GTK_DIALOG(app->new_task_dialog));
     }
 }
 

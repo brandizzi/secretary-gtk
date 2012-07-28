@@ -8,25 +8,7 @@
 #include <stdbool.h>
 #include <secretary/secretary.h>
 
-#include "secretary-gtk/application.h"
-
-typedef struct {
-    Secretary *secretary;
-    GtkWidget *description_entry,
-            *scheduled_for_calendar,
-            *scheduled_for_entry,
-            *calendar_window,
-            *dialog;
-    gulong scheduled_for_calendar_day_selected_handler_id,
-            scheduled_for_entry_changed_handler_id;
-} SctGtkNewTaskDialogStruct;
-
-SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
-        Secretary *secretary, GtkWindow *parent);
-Task *sct_gtk_new_task_dialog_struct_create_task(
-        SctGtkNewTaskDialogStruct *ntds);
-
-GtkWidget *sct_gtk_new_task_dialog_new(
-        Secretary *secretary, GtkWindow *parent);
+GtkWidget *sct_gtk_new_task_dialog_new(Secretary *secretary, GtkWindow *parent);
+Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog);
 
 #endif /* _SECRETARY_GTK_NEW_TASK_DIALOG_H */
