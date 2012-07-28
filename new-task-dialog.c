@@ -100,7 +100,7 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
             G_OBJECT(ntds->scheduled_for_entry), "changed",
             G_CALLBACK(on_scheduled_for_entry_changed), ntds);
             
-    GtkWidget *table = gtk_table_new(2, 2, TRUE);
+    GtkWidget *table = gtk_table_new(2, 2, FALSE);
     
     GtkWidget *label = gtk_label_new_with_mnemonic(_("_Description"));
     gtk_label_set_mnemonic_widget(GTK_LABEL(label), ntds->description_entry);
