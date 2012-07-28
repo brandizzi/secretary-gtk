@@ -10,6 +10,7 @@
 #include <time.h>
 
 GtkWidget *sct_gtk_date_entry_new(void);
+bool sct_gtk_date_entry_has_selected_date(GtkWidget *date_entry);
 time_t sct_gtk_date_entry_get_date(GtkWidget *date_entry);
 
 #endif /* _SECRETARY_GTK_DATE_ENTRY_H */

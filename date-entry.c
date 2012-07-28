@@ -67,6 +67,15 @@ time_t sct_gtk_date_entry_get_date(GtkWidget *date_entry) {
     return util_beginning_of_day(mktime(&date));
 }
 
+bool sct_gtk_date_entry_has_selected_date(GtkWidget *date_entry) {
+    SctGtkDateEntryStruct *des = g_object_get_data(
+            G_OBJECT(date_entry), SCT_GTK_DATE_ENTRY_STRUCT);
+    const char *date_string = gtk_entry_get_text(GTK_ENTRY(des->entry));
+    struct tm date;
+    date_string = strptime(date_string, _("%Y-%m-%d"), &date);
+    return date_string != NULL;
+}
+
 static bool on_entry_changed(GtkWidget *entry, gpointer data) {
     SctGtkDateEntryStruct *des = data;
     const char *date_string = gtk_entry_get_text(
