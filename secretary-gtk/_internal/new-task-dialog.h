@@ -19,9 +19,4 @@ typedef struct {
             scheduled_for_entry_changed_handler_id;
 } SctGtkNewTaskDialogStruct;    
 
-SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
-        GtkWidget *dialog, Secretary *secretary);
-Task *sct_gtk_new_task_dialog_struct_create_task(
-        SctGtkNewTaskDialogStruct *ntds);
-
 #endif /* _SECRETARY_GTK_NEW_TASK_DIALOG_INTERNAL_H */

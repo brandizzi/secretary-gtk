@@ -18,25 +18,7 @@ GtkWidget *sct_gtk_new_task_dialog_new(
             GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, 
             GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
     
-    gtk_window_set_title(GTK_WINDOW(dialog), _("New task"));
-    
-    SctGtkNewTaskDialogStruct *ntds = sct_gtk_new_task_dialog_struct_new(
-            dialog, secretary);
-    g_object_set_data(G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT, ntds);
-    
-    return dialog;
-}
-
-Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
-    SctGtkNewTaskDialogStruct *ntds = g_object_get_data(
-            G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT);
-    Task *task = sct_gtk_new_task_dialog_struct_create_task(ntds);
-    return task;
-}
-
-
-SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
-        GtkWidget *dialog, Secretary *secretary) {
+    // Creating struct and widgets
     SctGtkNewTaskDialogStruct *ntds = malloc(sizeof(SctGtkNewTaskDialogStruct));
     ntds->secretary = secretary;
     
@@ -70,11 +52,16 @@ SctGtkNewTaskDialogStruct *sct_gtk_new_task_dialog_struct_new(
     
     gtk_widget_show_all(ca);
     
-    return ntds;
+    gtk_window_set_title(GTK_WINDOW(dialog), _("New task"));
+    
+    g_object_set_data(G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT, ntds);
+    
+    return dialog;
 }
 
-Task *sct_gtk_new_task_dialog_struct_create_task(
-        SctGtkNewTaskDialogStruct *ntds) {
+Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
+    SctGtkNewTaskDialogStruct *ntds = g_object_get_data(
+            G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT);
     const char *description = gtk_entry_get_text(
             GTK_ENTRY(ntds->description_entry));
     Task *task = secretary_create_task(ntds->secretary, description);
