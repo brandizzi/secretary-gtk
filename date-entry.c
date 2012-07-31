@@ -67,9 +67,20 @@ time_t sct_gtk_date_entry_get_date(GtkWidget *date_entry) {
     date.tm_mday = day;
     date.tm_mon  = month;
     date.tm_year = year - 1900;
-    char buffer[12];
+    char buffer[12]; // TODO delete
     strftime(buffer, 12, _("%Y-%m-%d"), &date);
     return util_beginning_of_day(mktime(&date));
+}
+
+void sct_gtk_date_entry_set_date(GtkWidget *date_entry, time_t date_time) {
+    SctGtkDateEntryStruct *des = g_object_get_data(
+            G_OBJECT(date_entry), SCT_GTK_DATE_ENTRY_STRUCT);
+    guint year, month, day;
+    
+    struct tm *date = localtime(&date_time);
+    gtk_calendar_select_month(
+            GTK_CALENDAR(des->calendar),  date->tm_mon, date->tm_year+1900);
+    gtk_calendar_select_day(GTK_CALENDAR(des->calendar), date->tm_mday);
 }
 
 bool sct_gtk_date_entry_has_selected_date(GtkWidget *date_entry) {

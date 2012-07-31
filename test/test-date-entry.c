@@ -77,8 +77,9 @@ static void test_sct_gtk_date_entry_has_selected_date(
     SctGtkDateEntryStruct *des = g_object_get_data(
             G_OBJECT(date_entry), SCT_GTK_DATE_ENTRY_STRUCT);
     
+    // Not selected by default
     CuAssertTrue(test, !sct_gtk_date_entry_has_selected_date(date_entry));
-    time_t today = time(NULL);
+
     struct tm date;
     memset(&date, '\0', sizeof(struct tm));
     date.tm_year += 2; // Always in future, for assuring breakable test
@@ -92,6 +93,34 @@ static void test_sct_gtk_date_entry_has_selected_date(
     CuAssertTrue(test, sct_gtk_date_entry_has_selected_date(date_entry));
 }
 
+static void test_sct_gtk_date_entry_set_date(
+        CuTest *test) {
+    GtkWidget *date_entry = sct_gtk_date_entry_new();
+    SctGtkDateEntryStruct *des = g_object_get_data(
+            G_OBJECT(date_entry), SCT_GTK_DATE_ENTRY_STRUCT);
+
+    CuAssertTrue(test, !sct_gtk_date_entry_has_selected_date(date_entry));
+    
+    struct tm date;
+    memset(&date, '\0', sizeof(struct tm));
+    date.tm_year += 2; // Always in future, for assuring breakable test
+    date.tm_mon = 11;
+    date.tm_mday = 31;
+    
+    // Selecting date
+    sct_gtk_date_entry_set_date(date_entry, mktime(&date));
+
+    // Should change entry
+    char buffer[12];
+    strftime(buffer, 12, _("%Y-%m-%d"), &date);
+    CuAssertStrEquals(test, gtk_entry_get_text(GTK_ENTRY(des->entry)), buffer);
+    
+    // Date is selected now
+    CuAssertTrue(test, sct_gtk_date_entry_has_selected_date(date_entry));
+    time_t selected = sct_gtk_date_entry_get_date(date_entry);
+    CuAssertIntEquals(test, selected, mktime(&date));
+}
+
 
 CuSuite *test_sct_gtk_date_entry_suite(void) {
     CuSuite *suite  = CuSuiteNew();
@@ -100,6 +129,7 @@ CuSuite *test_sct_gtk_date_entry_suite(void) {
     SUITE_ADD_TEST(suite, 
             test_sct_gtk_date_entry_set_date_thru_entry_sets_calendar);
     SUITE_ADD_TEST(suite,test_sct_gtk_date_entry_get_date);
+    SUITE_ADD_TEST(suite,test_sct_gtk_date_entry_set_date);
     SUITE_ADD_TEST(suite,test_sct_gtk_date_entry_has_selected_date);
     return suite;
 }
