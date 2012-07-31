@@ -11,12 +11,8 @@
 typedef struct {
     Secretary *secretary;
     GtkWidget *description_entry,
-            *scheduled_for_calendar,
             *scheduled_for_entry,
-            *calendar_window,
             *dialog;
-    gulong scheduled_for_calendar_day_selected_handler_id,
-            scheduled_for_entry_changed_handler_id;
 } SctGtkNewTaskDialogStruct;    
 
 #endif /* _SECRETARY_GTK_NEW_TASK_DIALOG_INTERNAL_H */
