@@ -27,7 +27,7 @@ runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	test/test-application.c test/test-secretary-gtk/application.h \
 	test/test-new-task-dialog.c test/test-secretary-gtk/new-task-dialog.h \
 	test/test-utils.c test/test-secretary-gtk/test-utils.h \
-	test/test-date-entry.c test/test-secretary-gtk/test-date-entry.h
+	test/test-date-entry.c test/test-secretary-gtk/date-entry.h
 runtests_CFLAGS = @GTK_CFLAGS@ @SECRETARY_CFLAGS@
 runtests_LDADD = @GTK_LIBS@ @SECRETARY_LIBS@
 
