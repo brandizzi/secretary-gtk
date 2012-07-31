@@ -10,7 +10,8 @@
 #include <time.h>
 #include <gtk/gtk.h>
 
-void on_new_task_dialog_destroy(GtkWidget *dialog, gpointer data);
+static bool on_new_task_dialog_delete_event(GtkWidget *dialog, gpointer data);
+
 
 GtkWidget *sct_gtk_new_task_dialog_new(
         Secretary *secretary, GtkWindow *parent) {
@@ -56,6 +57,13 @@ GtkWidget *sct_gtk_new_task_dialog_new(
     
     gtk_window_set_title(GTK_WINDOW(dialog), _("New task"));
     
+    g_signal_connect(
+            G_OBJECT(dialog), "delete-event", 
+            G_CALLBACK(on_new_task_dialog_delete_event), NULL);
+    g_signal_connect(
+            G_OBJECT(dialog), "response", 
+            G_CALLBACK(on_new_task_dialog_delete_event), NULL);
+    
     g_object_set_data(G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT, ntds);
     g_signal_connect(
             G_OBJECT(dialog), "destroy", 
@@ -79,5 +87,9 @@ Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
     return task;
 }
 
+static bool on_new_task_dialog_delete_event(GtkWidget *dialog, gpointer data) {
+    gtk_widget_hide(dialog);
+    return true;
+}
 
 
