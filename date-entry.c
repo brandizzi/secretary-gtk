@@ -3,6 +3,7 @@
 #include "secretary-gtk/date-entry.h"
 #include "secretary-gtk/_internal/date-entry.h"
 #include "secretary-gtk/gettext.h"
+#include "secretary-gtk/utils.h"
 
 #include <time.h>
 #include <gtk/gtk.h>
@@ -48,6 +49,10 @@ GtkWidget *sct_gtk_date_entry_new(void) {
             G_CALLBACK(on_button_clicked), des);
 
     g_object_set_data(G_OBJECT(des->box), SCT_GTK_DATE_ENTRY_STRUCT, des);
+    g_signal_connect(
+            G_OBJECT(des->box), "destroy", 
+            G_CALLBACK(sct_gtk_free_struct_callback), des);
+            
     return des->box;
 }
 

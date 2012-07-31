@@ -3,12 +3,14 @@
 #include "secretary-gtk/new-task-dialog.h"
 #include "secretary-gtk/_internal/new-task-dialog.h"
 #include "secretary-gtk/gettext.h"
+#include "secretary-gtk/utils.h"
 
 #include "secretary-gtk/date-entry.h"
 
 #include <time.h>
 #include <gtk/gtk.h>
 
+void on_new_task_dialog_destroy(GtkWidget *dialog, gpointer data);
 
 GtkWidget *sct_gtk_new_task_dialog_new(
         Secretary *secretary, GtkWindow *parent) {
@@ -55,7 +57,10 @@ GtkWidget *sct_gtk_new_task_dialog_new(
     gtk_window_set_title(GTK_WINDOW(dialog), _("New task"));
     
     g_object_set_data(G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT, ntds);
-    
+    g_signal_connect(
+            G_OBJECT(dialog), "destroy", 
+            G_CALLBACK(sct_gtk_free_struct_callback), ntds);
+
     return dialog;
 }
 
@@ -73,4 +78,6 @@ Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
     }
     return task;
 }
+
+
 
