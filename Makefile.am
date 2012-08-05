@@ -5,6 +5,7 @@ secretary_module_srcs =	secretary-gtk/widget.h widget.c \
 	secretary-gtk/panel.h panel.c \
 	secretary-gtk/perspective-tree-view.h perspective-tree-view.c \
 	perspective-tree-model.c secretary-gtk/perspective-tree-model.h \
+    project-tree-model.c secretary-gtk/project-tree-model.h \
 	secretary-gtk/task-listview.h task-listview.c \
 	secretary-gtk/task-tree-model.h task-tree-model.c \
 	secretary-gtk/utils.h utils.c \
@@ -23,7 +24,10 @@ LDADD = $(LIBINTL)
 
 runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	$(secretary_module_srcs) \
-	test/test-perspective-tree-model.c test/test-secretary-gtk/perspective-tree-model.h \
+	test/test-perspective-tree-model.c \
+	test/test-secretary-gtk/perspective-tree-model.h \
+	test/test-project-tree-model.c \
+	test/test-secretary-gtk/project-tree-model.h \
 	test/test-application.c test/test-secretary-gtk/application.h \
 	test/test-new-task-dialog.c test/test-secretary-gtk/new-task-dialog.h \
 	test/test-utils.c test/test-secretary-gtk/test-utils.h \
