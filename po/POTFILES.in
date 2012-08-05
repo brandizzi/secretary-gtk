@@ -1,10 +1,10 @@
 toolbar.c
 panel.c
-project-treeview.c
+perspective-tree-view.c
+perspective-tree-model.c
 project-tree-model.c
 task-listview.c
 task-tree-model.c
 utils.c
 application.c
 new-task-dialog.c
-
