@@ -14,7 +14,7 @@ static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
     
     CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
     gtk_tree_model_get(model, &iter, SCT_GTK_PROJECT_COLUMN, &name, -1);
-    CuAssertStrEquals(test, _(""), name);
+    CuAssertStrEquals(test, "", name);
     g_free(name);
     
     CuAssertTrue(test, gtk_tree_model_iter_next(model, &iter));

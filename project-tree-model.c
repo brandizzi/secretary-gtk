@@ -9,7 +9,7 @@ GtkTreeStore *sct_gtk_project_tree_model_new(Secretary *secretary) {
     GtkTreeIter iter, child;
     
     gtk_tree_store_append(model, &child, NULL);
-    gtk_tree_store_set(model, &child, SCT_GTK_PROJECT_COLUMN, _(""), -1);
+    gtk_tree_store_set(model, &child, SCT_GTK_PROJECT_COLUMN, "", -1);
 
     int n_projects = secretary_count_projects(secretary);
     for (int i = 0; i < n_projects; i++) {
