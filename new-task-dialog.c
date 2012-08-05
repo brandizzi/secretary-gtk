@@ -90,8 +90,10 @@ Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
     }
     int index = gtk_combo_box_get_active(
             GTK_COMBO_BOX(ntds->project_combo_box));
-    if (index >= 0) {
-        Project *project = secretary_get_nth_project(ntds->secretary, index);
+    if (index > 0) {
+        Project *project = secretary_get_nth_project(
+                ntds->secretary, 
+                index-SCT_GTK_NEW_TASK_DIALOG_FIRST_PROJECT);
         secretary_move_task_to_project(ntds->secretary, project, task);
     }
     return task;

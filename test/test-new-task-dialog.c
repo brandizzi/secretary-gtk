@@ -51,9 +51,30 @@ static void test_sct_gtk_new_task_dialog_select_date_schedule_task(
     CuAssertTrue(test, !task_has_project(task));
 }
 
-
-
 static void test_sct_gtk_new_task_dialog_select_project(
+        CuTest *test) {
+    Secretary *secretary = secretary_new();
+    Project *project = secretary_create_project(secretary, "My project");
+    GtkWidget *dialog = sct_gtk_new_task_dialog_new(secretary, NULL);
+    SctGtkNewTaskDialogStruct *ds = g_object_get_data(
+            G_OBJECT(dialog), SCT_GTK_NEW_TASK_DIALOG_STRUCT);
+        
+    gtk_entry_set_text(GTK_ENTRY(ds->description_entry), "My new task");
+    gtk_combo_box_set_active(
+            GTK_COMBO_BOX(ds->project_combo_box),
+            SCT_GTK_NEW_TASK_DIALOG_FIRST_PROJECT);
+    
+    Task *task = sct_gtk_new_task_dialog_create_task(GTK_DIALOG(dialog));
+    CuAssertStrEquals(test, "My new task", task_get_description(task));
+    
+    CuAssertIntEquals(test, secretary_count_tasks(secretary, false), 1);
+    CuAssertPtrEquals(test, task, secretary_get_nth_task(secretary, 0));
+    CuAssertTrue(test, !task_is_scheduled(task));
+    CuAssertTrue(test, task_has_project(task));
+    CuAssertPtrEquals(test, task_get_project(task), project);
+}
+
+static void test_sct_gtk_new_task_dialog_select_first_option_no_project(
         CuTest *test) {
     Secretary *secretary = secretary_new();
     Project *project = secretary_create_project(secretary, "My project");
@@ -70,8 +91,7 @@ static void test_sct_gtk_new_task_dialog_select_project(
     CuAssertIntEquals(test, secretary_count_tasks(secretary, false), 1);
     CuAssertPtrEquals(test, task, secretary_get_nth_task(secretary, 0));
     CuAssertTrue(test, !task_is_scheduled(task));
-    CuAssertTrue(test, task_has_project(task));
-    CuAssertPtrEquals(test, task_get_project(task), project);
+    CuAssertTrue(test, !task_has_project(task));
 }
 
 CuSuite *test_sct_gtk_new_task_dialog_suite(void) {
@@ -80,6 +100,8 @@ CuSuite *test_sct_gtk_new_task_dialog_suite(void) {
     SUITE_ADD_TEST(suite, 
             test_sct_gtk_new_task_dialog_select_date_schedule_task);
     SUITE_ADD_TEST(suite, test_sct_gtk_new_task_dialog_select_project);
+    SUITE_ADD_TEST(suite, 
+            test_sct_gtk_new_task_dialog_select_first_option_no_project);
     return suite;
 }
 

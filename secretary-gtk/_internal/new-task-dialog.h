@@ -7,6 +7,7 @@
 #include <secretary/secretary.h>
 
 #define SCT_GTK_NEW_TASK_DIALOG_STRUCT "sct-gtk-new-task-dialog-struct"
+#define SCT_GTK_NEW_TASK_DIALOG_FIRST_PROJECT (1)
 
 typedef struct {
     Secretary *secretary;
