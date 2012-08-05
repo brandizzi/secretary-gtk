@@ -6,6 +6,7 @@
 #include "secretary-gtk/utils.h"
 
 #include "secretary-gtk/date-entry.h"
+#include "secretary-gtk/project-tree-model.h"
 
 #include <time.h>
 #include <gtk/gtk.h>
@@ -28,6 +29,9 @@ GtkWidget *sct_gtk_new_task_dialog_new(
     ntds->dialog = dialog;
     ntds->description_entry = gtk_entry_new();
     ntds->scheduled_for_entry = sct_gtk_date_entry_new();
+    ntds->project_model = GTK_TREE_MODEL(
+            sct_gtk_project_tree_model_new(ntds->secretary));
+    ntds->project_combo_box = gtk_combo_box_new_with_model(ntds->project_model);
 
     GtkWidget *table = gtk_table_new(2, 2, FALSE);
     
@@ -83,6 +87,12 @@ Task *sct_gtk_new_task_dialog_create_task(GtkDialog *dialog) {
         secretary_schedule_task(
                 ntds->secretary, task, 
                 sct_gtk_date_entry_get_date(ntds->scheduled_for_entry));
+    }
+    int index = gtk_combo_box_get_active(
+            GTK_COMBO_BOX(ntds->project_combo_box));
+    if (index >= 0) {
+        Project *project = secretary_get_nth_project(ntds->secretary, index);
+        secretary_move_task_to_project(ntds->secretary, project, task);
     }
     return task;
 }

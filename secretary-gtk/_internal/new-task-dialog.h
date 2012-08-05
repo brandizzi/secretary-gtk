@@ -12,7 +12,9 @@ typedef struct {
     Secretary *secretary;
     GtkWidget *description_entry,
             *scheduled_for_entry,
+            *project_combo_box,
             *dialog;
+    GtkTreeModel *project_model;
 } SctGtkNewTaskDialogStruct;    
 
 #endif /* _SECRETARY_GTK_NEW_TASK_DIALOG_INTERNAL_H */
