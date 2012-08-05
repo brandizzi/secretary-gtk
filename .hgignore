@@ -55,3 +55,4 @@ po/secretary-gtk.pot
 po/stamp-po
 po/remove-potcdate\.sed
 secretary-gtk-.*\.tar\.gz
+secretary-gtk-\d\.\d\.\ddev
