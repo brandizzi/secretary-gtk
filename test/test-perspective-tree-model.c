@@ -1,13 +1,13 @@
-#include "test/test-secretary-gtk/project-tree-model.h"
-#include "secretary-gtk/project-tree-model.h"
+#include "test/test-secretary-gtk/perspective-tree-model.h"
+#include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
-static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
+static void test_sct_gtk_perspective_tree_model_copy_projects(CuTest *test) {
     Secretary *secretary = secretary_new();
     Project *p1 = secretary_create_project(secretary, "My project"),
             *p2 = secretary_create_project(secretary, "Your project");
     GtkTreeModel *model = 
-            GTK_TREE_MODEL(sct_gtk_project_tree_model_new(secretary));
+            GTK_TREE_MODEL(sct_gtk_perspective_tree_model_new(secretary));
     GtkTreeIter iter, child;
     gchar *name;
     
@@ -48,9 +48,9 @@ static void test_sct_gtk_project_tree_model_copy_projects(CuTest *test) {
     g_free(name);
 }
 
-CuSuite *test_sct_gtk_project_tree_model_suite(void) {
+CuSuite *test_sct_gtk_perspective_tree_model_suite(void) {
     CuSuite *suite  = CuSuiteNew();
-    SUITE_ADD_TEST(suite, test_sct_gtk_project_tree_model_copy_projects);
+    SUITE_ADD_TEST(suite, test_sct_gtk_perspective_tree_model_copy_projects);
     return suite;
 }
 

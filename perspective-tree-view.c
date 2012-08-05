@@ -1,14 +1,14 @@
 #include "config.h"
 
-#include "secretary-gtk/project-treeview.h"
-#include "secretary-gtk/project-tree-model.h"
+#include "secretary-gtk/perspective-tree-view.h"
+#include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/task-tree-model.h"
 #include "secretary-gtk/task-listview.h"
 #include "secretary-gtk/gettext.h"
 
-static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data);
+static void _on_cursor_changed(GtkTreeView *perspective_tree_view, gpointer data);
 
-GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
+GtkWidget *sct_gtk_perspective_tree_view_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
     GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes(
@@ -19,7 +19,7 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     Secretary *secretary = notebook_get_secretary(app->notebook);
     
     GtkTreeModel *model = 
-            GTK_TREE_MODEL(sct_gtk_project_tree_model_new(secretary));
+            GTK_TREE_MODEL(sct_gtk_perspective_tree_model_new(secretary));
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
 
@@ -31,7 +31,7 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     gtk_widget_show(GTK_WIDGET(treeview));
     gtk_widget_show(GTK_WIDGET(window));
     
-    app->project_tree_view = treeview;
+    app->perspective_tree_view = treeview;
     app->project_tree_store = model;
     
     gtk_tree_view_expand_row(GTK_TREE_VIEW(treeview), 
@@ -43,11 +43,11 @@ GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app) {
     return GTK_WIDGET(window);
 }
 
-static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
+static void _on_cursor_changed(GtkTreeView *perspective_tree_view, gpointer data) {
     SctGtkApplication *app = data;
 
     GtkTreeSelection *selection =
-            gtk_tree_view_get_selection(project_treeview);
+            gtk_tree_view_get_selection(perspective_tree_view);
     GtkTreeIter iter;
     GtkTreeModel *model;
     if (!gtk_tree_selection_get_selected(selection, &model, &iter)) return;
@@ -73,8 +73,8 @@ static void _on_cursor_changed(GtkTreeView *project_treeview, gpointer data) {
     case SCT_GTK_PROJECT_INDEX_PROJECT:
         if (gtk_tree_path_get_depth(path) == 1) {
             gtk_tree_view_expand_row(
-                    GTK_TREE_VIEW(project_treeview), path, TRUE);
-            sct_gtk_application_select_path_on_project_treeview(
+                    GTK_TREE_VIEW(perspective_tree_view), path, TRUE);
+            sct_gtk_application_select_path_on_perspective_tree_view(
                     app, SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
         } else {
             Project *project = secretary_get_nth_project(

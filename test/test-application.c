@@ -2,7 +2,7 @@
 #include "test/test-secretary-gtk/test-utils.h"
 
 #include "secretary-gtk/application.h"
-#include "secretary-gtk/project-tree-model.h"
+#include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
 static void test_sct_gtk_app_select_inbox(CuTest *test) {
@@ -20,7 +20,7 @@ static void test_sct_gtk_app_select_inbox(CuTest *test) {
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
         // Selecting inbox tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_INBOX);
 
     gchar *name = 
@@ -49,7 +49,7 @@ static void test_sct_gtk_app_select_inbox_at_start(CuTest *test) {
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
         // Selecting inbox tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_INBOX);
 
     gchar *name = 
@@ -78,7 +78,7 @@ static void test_sct_gtk_app_select_scheduled(CuTest *test) {
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
     // Selecting scheduled tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_SCHEDULED);
 
     gchar *name = 
@@ -111,7 +111,7 @@ static void test_sct_gtk_app_select_scheduled_for_today(CuTest *test) {
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
     // Selecting scheduled for today tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY);
 
     gchar *name = 
@@ -140,7 +140,7 @@ static void test_sct_gtk_app_select_project_child(CuTest *test) {
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
     // Selecting scheduled for today tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
 
     gchar *name = 
@@ -172,7 +172,7 @@ static void test_sct_gtk_app_select_project_should_not_crash(CuTest *test) {
     GtkTreePath *path = gtk_tree_path_new_from_string("3:1234");
     gint *indices = gtk_tree_path_get_indices(path);
     // Selecting scheduled for today tasks
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_PROJECT);
 
     gchar *name = 
@@ -206,9 +206,9 @@ static void test_sct_gtk_app_select_collapsed_project_should_not_crash(
     GtkTreePath *path = gtk_tree_path_new_from_string("3:1234");
     gint *indices = gtk_tree_path_get_indices(path);
     // Collapsing
-    gtk_tree_view_collapse_row(GTK_TREE_VIEW(app->project_tree_view),
+    gtk_tree_view_collapse_row(GTK_TREE_VIEW(app->perspective_tree_view),
         gtk_tree_path_new_from_string("3"));
-    sct_gtk_application_select_path_on_project_treeview(app, 
+    sct_gtk_application_select_path_on_perspective_tree_view(app, 
             SCT_GTK_PROJECT_PATH_PROJECT);
     return;
 

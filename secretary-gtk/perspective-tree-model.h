@@ -22,7 +22,7 @@ enum {
 #define SCT_GTK_PROJECT_INDEX_SCHEDULED 2
 #define SCT_GTK_PROJECT_INDEX_PROJECT 3
 
-GtkTreeStore *sct_gtk_project_tree_model_new(Secretary *secretary);
+GtkTreeStore *sct_gtk_perspective_tree_model_new(Secretary *secretary);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREE_MODEL_H */
 

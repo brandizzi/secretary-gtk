@@ -15,7 +15,7 @@ typedef struct {
             *task_list_store;
     GtkWidget 
             *widget, 
-            *project_tree_view, 
+            *perspective_tree_view, 
             *task_list_view,
             *main_window,
             *new_task_dialog;
@@ -29,7 +29,7 @@ typedef struct {
 
 SctGtkApplication *sct_gtk_application_new(Notebook *notebook);
 void sct_gtk_application_free(SctGtkApplication *application);
-void sct_gtk_application_select_path_on_project_treeview(
+void sct_gtk_application_select_path_on_perspective_tree_view(
         SctGtkApplication *app, const gchar *path);
 
 #endif /* _SECRETARY_GTK_APPLICATION */

@@ -8,7 +8,7 @@
 
 #include "secretary-gtk/application.h"
 
-GtkWidget *sct_gtk_project_treeview_new(SctGtkApplication *app);
+GtkWidget *sct_gtk_perspective_tree_view_new(SctGtkApplication *app);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREEVIEW_H */
 
