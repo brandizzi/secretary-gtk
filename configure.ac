@@ -5,6 +5,7 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CC_C99
 AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.18.1])
 AC_CONFIG_SRCDIR([secretary.c])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile po/Makefile.in])
