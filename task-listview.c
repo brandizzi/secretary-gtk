@@ -24,7 +24,8 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
             _("Scheduled to"), date_renderer, "text",  
             SCT_GTK_TASK_DATE_COLUMN, NULL);
     
-    GtkTreeModel *model = GTK_TREE_MODEL(sct_gtk_task_tree_model_new(app));
+    GtkTreeModel *model = GTK_TREE_MODEL(
+            sct_gtk_task_tree_model_new(app->secretary));
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
     
@@ -41,13 +42,13 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
 }
 
 void sct_gtk_task_listview_change_content(
-        GtkTreeView *task_treeview, Secretary *secretary, 
+        GtkTreeView *task_treeview,
         SctGtkChangeTaskListViewContentCallback *callback, void *data) {
     GtkListStore *store = GTK_LIST_STORE(
             gtk_tree_view_get_model(GTK_TREE_VIEW(task_treeview)));
     g_object_ref(store);
     gtk_tree_view_set_model(GTK_TREE_VIEW(task_treeview), NULL);
-    callback(store, secretary, data);
+    callback(store, data);
     gtk_tree_view_set_model(
             GTK_TREE_VIEW(task_treeview), GTK_TREE_MODEL(store));
     g_object_unref(store);

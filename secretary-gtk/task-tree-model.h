@@ -14,16 +14,16 @@ enum {
     SCT_GTK_TASK_COLUMN_COUNT
 };
 
-GtkListStore *sct_gtk_task_tree_model_new(SctGtkApplication *app);
+GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary);
 
 void sct_gtk_task_tree_model_show_inbox(
-        GtkListStore *model, Secretary *secretary, void *ignored_data);
+        GtkListStore *model,void *ignored_data);
 void sct_gtk_task_tree_model_show_scheduled(
-        GtkListStore *model, Secretary *secretary, void *ignored_data);
+        GtkListStore *model, void *ignored_data);
 void sct_gtk_task_tree_model_show_scheduled_for_today(
-        GtkListStore *model, Secretary *secretary, void *ignored_data);
+        GtkListStore *model, void *ignored_data);
 void sct_gtk_task_tree_model_show_project(
-        GtkListStore *model, Secretary *secretary, void *data);
+        GtkListStore *model, void *data);
         
 void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
 

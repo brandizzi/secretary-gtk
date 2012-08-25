@@ -6,16 +6,15 @@
 
 static void _sct_gtk_task_tree_model_show_all(GtkListStore *model, Secretary *secretary);
 
-GtkListStore *sct_gtk_task_tree_model_new(SctGtkApplication *app) {
+GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary) {
     GtkListStore *model = gtk_list_store_new(SCT_GTK_TASK_COLUMN_COUNT,
             G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
-    Secretary *secretary = notebook_get_secretary(app->notebook);
-    //_sct_gtk_task_tree_model_show_all(model, secretary);
+    g_object_set_data(G_OBJECT(model), "secretary", secretary);
     return model;
 }
 
-void sct_gtk_task_tree_model_show_inbox(
-        GtkListStore *model, Secretary *secretary, void *ignored_data) {
+void sct_gtk_task_tree_model_show_inbox(GtkListStore *model, void *data) {
+    Secretary *secretary = g_object_get_data(G_OBJECT(model), "secretary");
     int n_tasks = secretary_count_inbox_tasks(secretary, false);
     gtk_list_store_clear(model);
     for (int i = 0; i < n_tasks; i++) {
@@ -25,7 +24,8 @@ void sct_gtk_task_tree_model_show_inbox(
 }
 
 void sct_gtk_task_tree_model_show_scheduled_for_today(
-        GtkListStore *model, Secretary *secretary, void *ignored_data) {
+        GtkListStore *model, void *data) {
+    Secretary *secretary = g_object_get_data(G_OBJECT(model), "secretary");
     int n_tasks = secretary_count_tasks_scheduled_for_today(secretary, false);
     gtk_list_store_clear(model);
     for (int i = 0; i < n_tasks; i++) {
@@ -35,8 +35,8 @@ void sct_gtk_task_tree_model_show_scheduled_for_today(
     }
 }
 
-void sct_gtk_task_tree_model_show_scheduled(
-        GtkListStore *model, Secretary *secretary, void *ignored_data) {
+void sct_gtk_task_tree_model_show_scheduled(GtkListStore *model, void *data) {
+    Secretary *secretary = g_object_get_data(G_OBJECT(model), "secretary");
     int n_tasks = secretary_count_tasks_scheduled(secretary, false);
     gtk_list_store_clear(model);
     for (int i = 0; i < n_tasks; i++) {
@@ -45,8 +45,8 @@ void sct_gtk_task_tree_model_show_scheduled(
     }
 }
 
-void sct_gtk_task_tree_model_show_project(
-        GtkListStore *model, Secretary *secretary, void *data) {
+void sct_gtk_task_tree_model_show_project(GtkListStore *model, void *data) {
+    Secretary *secretary = g_object_get_data(G_OBJECT(model), "secretary");
     Project *project = data;
     int n_tasks = project_count_tasks(project, false);
     gtk_list_store_clear(model);
