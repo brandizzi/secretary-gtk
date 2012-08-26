@@ -8,7 +8,8 @@ static void _sct_gtk_task_tree_model_show_all(GtkListStore *model, Secretary *se
 
 GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary) {
     GtkListStore *model = gtk_list_store_new(SCT_GTK_TASK_COLUMN_COUNT,
-            G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+            G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
+            G_TYPE_POINTER);
     g_object_set_data(G_OBJECT(model), "secretary", secretary);
     return model;
 }
@@ -76,6 +77,9 @@ void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task) {
     }
     gtk_list_store_set(model, &iter, SCT_GTK_TASK_DATE_COLUMN,
             buffer, -1);
+    
+    gtk_list_store_set(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN,
+            task, -1);
 }
 
 static void _sct_gtk_task_tree_model_show_all(GtkListStore *model, Secretary *secretary) {

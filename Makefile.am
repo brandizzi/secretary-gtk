@@ -26,6 +26,8 @@ runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	$(secretary_module_srcs) \
 	test/test-perspective-tree-model.c \
 	test/test-secretary-gtk/perspective-tree-model.h \
+	test/test-task-tree-model.c \
+	test/test-secretary-gtk/task-tree-model.h \
 	test/test-project-tree-model.c \
 	test/test-secretary-gtk/project-tree-model.h \
 	test/test-application.c test/test-secretary-gtk/application.h \
