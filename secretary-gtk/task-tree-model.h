@@ -16,6 +16,7 @@ enum {
 };
 
 GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary);
+Secretary *sct_gtk_task_tree_model_get_secretary(GtkTreeModel *model);
 
 void sct_gtk_task_tree_model_show_inbox(
         GtkListStore *model,void *ignored_data);
@@ -27,6 +28,10 @@ void sct_gtk_task_tree_model_show_project(
         GtkListStore *model, void *data);
         
 void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
+
+void sct_gtk_task_tree_model_done_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREE_MODEL_H */
 

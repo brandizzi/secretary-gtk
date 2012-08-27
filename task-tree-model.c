@@ -14,6 +14,10 @@ GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary) {
     return model;
 }
 
+Secretary *sct_gtk_task_tree_model_get_secretary(GtkTreeModel *model) {
+    return g_object_get_data(G_OBJECT(model), "secretary");
+}
+
 void sct_gtk_task_tree_model_show_inbox(GtkListStore *model, void *data) {
     Secretary *secretary = g_object_get_data(G_OBJECT(model), "secretary");
     int n_tasks = secretary_count_inbox_tasks(secretary, false);
@@ -81,6 +85,18 @@ void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task) {
     gtk_list_store_set(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN,
             task, -1);
 }
+
+void sct_gtk_task_tree_model_done_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
+    Task *task = NULL;
+    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+            &task, -1);
+    if (task) {
+        g_object_set_data(G_OBJECT(renderer), "active", (gpointer)task_is_done(task));
+    }
+}
+
 
 static void _sct_gtk_task_tree_model_show_all(GtkListStore *model, Secretary *secretary) {
     gtk_list_store_clear(model);
