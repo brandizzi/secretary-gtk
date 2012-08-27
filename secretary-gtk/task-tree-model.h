@@ -32,6 +32,9 @@ void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
 void sct_gtk_task_tree_model_done_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
+void sct_gtk_task_tree_model_descritpion_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREE_MODEL_H */
 
