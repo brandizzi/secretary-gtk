@@ -86,31 +86,6 @@ void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task) {
             task, -1);
 }
 
-void sct_gtk_task_tree_model_done_cell_data_func(
-        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
-        GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
-    Task *task = NULL;
-    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
-            &task, -1);
-    if (task) {
-        g_object_set_data(
-                G_OBJECT(renderer), "active", (gpointer)task_is_done(task));
-    }
-}
-
-void sct_gtk_task_tree_model_description_cell_data_func(
-        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
-        GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
-    Task *task = NULL;
-    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
-            &task, -1);
-    if (task) {
-        g_object_set_data(
-                G_OBJECT(renderer), "text",
-                (gpointer)task_get_description(task));
-    }
-}
-
 
 static void _sct_gtk_task_tree_model_show_all(GtkListStore *model, Secretary *secretary) {
     gtk_list_store_clear(model);
