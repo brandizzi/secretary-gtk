@@ -209,6 +209,22 @@ static void test_sct_gtk_task_list_view_get_scheduled(CuTest *test) {
     CuAssertStrEquals(test, 
             g_object_get_data(G_OBJECT(renderer), "text"), "4th task");
     
+    // Scheduled for today
+    sct_gtk_task_tree_model_show_scheduled_for_today(model, NULL);
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    sct_gtk_task_list_view_scheduled_date_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+
+    t = task_get_scheduled_date(t1);
+    buffer[SCT_GTK_TASK_TREE_MODEL_DATE_SIZE];
+    
+    strftime(buffer, SCT_GTK_TASK_TREE_MODEL_DATE_SIZE, "%d-%m-%Y", localtime(&t));
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"),  buffer);
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "1st task");
 }
 
 
