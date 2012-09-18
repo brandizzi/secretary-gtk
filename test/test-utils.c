@@ -24,6 +24,7 @@ gchar *test_sct_gtk_util_get_task_description_from_list_view(
     GtkTreeIter iter;
     GtkTreeModel *task_store = app->task_list_store;
     gtk_tree_model_get_iter_first(task_store, &iter);
+    char *description;
     
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
     
@@ -35,7 +36,7 @@ gchar *test_sct_gtk_util_get_task_description_from_list_view(
     }
     sct_gtk_task_list_view_description_cell_data_func(
             NULL, renderer, task_store, &iter, NULL);
-    
-    return g_object_get_data(G_OBJECT(renderer), "text");
+    g_object_get(G_OBJECT(renderer), "text", &description, NULL);
+    return description;
 }
 

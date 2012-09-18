@@ -14,13 +14,13 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
     gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Done"), done_renderer, 
             sct_gtk_task_list_view_done_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
+    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Description"), description_renderer, 
             sct_gtk_task_list_view_description_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
+    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Project"), project_renderer, 
             sct_gtk_task_list_view_project_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
+    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Scheduled to"), date_renderer, 
             sct_gtk_task_list_view_scheduled_date_cell_data_func, NULL, NULL);
     
@@ -60,8 +60,8 @@ void sct_gtk_task_list_view_done_cell_data_func(
     gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
             &task, -1);
     if (task) {
-        g_object_set_data(
-                G_OBJECT(renderer), "active", (gpointer)task_is_done(task));
+        g_object_set(
+                G_OBJECT(renderer), "active", (gpointer)task_is_done(task), NULL);
     }
 }
 
@@ -72,9 +72,8 @@ void sct_gtk_task_list_view_description_cell_data_func(
     gtk_tree_model_get(model, iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN,  
             &task, -1);
     if (task) {
-        g_object_set_data(
-                G_OBJECT(renderer), "text",
-                (gpointer)task_get_description(task));
+        g_object_set(
+            G_OBJECT(renderer), "text", task_get_description(task), NULL);
     }
 }
 
@@ -87,12 +86,12 @@ void sct_gtk_task_list_view_project_cell_data_func(
     if (task) {
         if (task_has_project(task)) {
             Project *project = task_get_project(task);
-            g_object_set_data(
+            g_object_set(
                     G_OBJECT(renderer), "text",
-                    (gpointer)project_get_name(project));
+                    (gpointer)project_get_name(project), NULL);
         } else {
-            g_object_set_data(
-                    G_OBJECT(renderer), "text", "");
+            g_object_set(
+                    G_OBJECT(renderer), "text", "", NULL);
         }
     }
 }
@@ -110,10 +109,10 @@ void sct_gtk_task_list_view_scheduled_date_cell_data_func(
             strftime(
                 buffer, SCT_GTK_TASK_TREE_MODEL_DATE_SIZE,  
                 _("%d-%m-%Y"), localtime(&t));
-            g_object_set_data(G_OBJECT(renderer), "text", (gpointer)buffer);
+            g_object_set(G_OBJECT(renderer), "text", (gpointer)buffer, NULL);
         } else {
-            g_object_set_data(
-                    G_OBJECT(renderer), "text", "");
+            g_object_set(
+                    G_OBJECT(renderer), "text", "", NULL);
         }
     }
 }

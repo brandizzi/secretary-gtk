@@ -27,9 +27,11 @@ static void test_sct_gtk_app_select_inbox(CuTest *test) {
         test_sct_gtk_util_get_task_description_from_list_view(app, 0);
     
     CuAssertStrEquals(test, "Inbox task", name);
+    g_free(name);
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
@@ -54,11 +56,12 @@ static void test_sct_gtk_app_select_inbox_at_start(CuTest *test) {
 
     gchar *name = 
         test_sct_gtk_util_get_task_description_from_list_view(app, 0);
-    
     CuAssertStrEquals(test, "Inbox task", name);
+    g_free(name);
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
@@ -121,6 +124,7 @@ static void test_sct_gtk_app_select_scheduled_for_today(CuTest *test) {
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
@@ -150,6 +154,7 @@ static void test_sct_gtk_app_select_project_child(CuTest *test) {
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
@@ -182,6 +187,7 @@ static void test_sct_gtk_app_select_project_should_not_crash(CuTest *test) {
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
@@ -219,6 +225,7 @@ static void test_sct_gtk_app_select_collapsed_project_should_not_crash(
     
     name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
+    g_free(name);
     
     sct_gtk_application_free(app);
 }
