@@ -11,21 +11,20 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
             *description_renderer = gtk_cell_renderer_text_new(),
             *project_renderer = gtk_cell_renderer_combo_new(),
             *date_renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
+            _("Done"), done_renderer, 
+            sct_gtk_task_list_view_done_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
-            _("Done"), done_renderer, "active",  
-            SCT_GTK_TASK_DONE_COLUMN, NULL);
+            _("Description"), description_renderer, 
+            sct_gtk_task_list_view_description_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
-            _("Description"), description_renderer, "text",  
-            SCT_GTK_TASK_DESCRIPTION_COLUMN, NULL);
+            _("Project"), project_renderer, 
+            sct_gtk_task_list_view_project_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
-            _("Project"), project_renderer, "text",  
-            SCT_GTK_TASK_PROJECT_COLUMN, NULL);
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1,
-            _("Scheduled to"), date_renderer, "text",  
-            SCT_GTK_TASK_DATE_COLUMN, NULL);
+            _("Scheduled to"), date_renderer, 
+            sct_gtk_task_list_view_scheduled_date_cell_data_func, NULL, NULL);
     
-    GtkTreeModel *model = GTK_TREE_MODEL(
-            sct_gtk_task_tree_model_new(app->secretary));
+    GtkTreeModel *model = sct_gtk_task_tree_model_new(app->secretary);
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
     
@@ -70,7 +69,7 @@ void sct_gtk_task_list_view_description_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
     Task *task = NULL;
-    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+    gtk_tree_model_get(model, iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN,  
             &task, -1);
     if (task) {
         g_object_set_data(

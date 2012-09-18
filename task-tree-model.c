@@ -6,7 +6,6 @@ static void _sct_gtk_task_tree_model_show_all(GtkTreeModel *model, Secretary *se
 
 GtkTreeModel *sct_gtk_task_tree_model_new(Secretary *secretary) {
     GtkListStore *model = gtk_list_store_new(SCT_GTK_TASK_COLUMN_COUNT,
-            G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
             G_TYPE_POINTER);
     g_object_set_data(G_OBJECT(model), "secretary", secretary);
     return GTK_TREE_MODEL(model);
@@ -63,23 +62,6 @@ void sct_gtk_task_tree_model_add_task(GtkTreeModel *model, Task *task) {
     GtkListStore *store = GTK_LIST_STORE(model);
     GtkTreeIter iter;
     gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter, SCT_GTK_TASK_DONE_COLUMN,
-            task_is_done(task), -1);
-
-    const char *description = task_get_description(task);
-    gtk_list_store_set(store, &iter, SCT_GTK_TASK_DESCRIPTION_COLUMN,
-            description, -1);
-
-    Project *project = task_get_project(task);
-    gtk_list_store_set(store, &iter, SCT_GTK_TASK_PROJECT_COLUMN,
-            project? project_get_name(project) : "" , -1);
-    char buffer[SCT_GTK_TASK_TREE_MODEL_DATE_SIZE] = "";
-    if (task_is_scheduled(task)) {
-        time_t secs = task_get_scheduled_date(task);
-        strftime(buffer, SCT_GTK_TASK_TREE_MODEL_DATE_SIZE, "%d-%m-%Y", localtime(&secs));
-    }
-    gtk_list_store_set(store, &iter, SCT_GTK_TASK_DATE_COLUMN,
-            buffer, -1);
     
     gtk_list_store_set(store, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN,
             task, -1);

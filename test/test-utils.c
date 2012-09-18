@@ -1,4 +1,5 @@
 #include "test-secretary-gtk/test-utils.h"
+#include "secretary-gtk/task-tree-view.h"
 
 void test_sct_gtk_util_create_project_and_four_tasks(
     Secretary *secretary, Project **project, 
@@ -23,14 +24,18 @@ gchar *test_sct_gtk_util_get_task_description_from_list_view(
     GtkTreeIter iter;
     GtkTreeModel *task_store = app->task_list_store;
     gtk_tree_model_get_iter_first(task_store, &iter);
+    
+    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+    
     for (int i = 0; i < index; i++) {
         gtk_tree_model_iter_next(task_store, &iter);
     }
     if (!gtk_list_store_iter_is_valid(GTK_LIST_STORE(task_store), &iter)) {
         return NULL;
     }
-    gchar *name;
-    gtk_tree_model_get(task_store, &iter, 1, &name, -1);
-    return name;
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, task_store, &iter, NULL);
+    
+    return g_object_get_data(G_OBJECT(renderer), "text");
 }
 
