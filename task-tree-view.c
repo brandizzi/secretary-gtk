@@ -98,3 +98,24 @@ void sct_gtk_task_list_view_project_cell_data_func(
     }
 }
 
+void sct_gtk_task_list_view_scheduled_date_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
+    Task *task = NULL;
+    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+            &task, -1);
+    if (task) {
+        if (task_is_scheduled(task)) {
+            time_t t = task_get_scheduled_date(task);
+            char *buffer = malloc(sizeof(char)*SCT_GTK_TASK_TREE_MODEL_DATE_SIZE);
+            strftime(
+                buffer, SCT_GTK_TASK_TREE_MODEL_DATE_SIZE,  
+                _("%d-%m-%Y"), localtime(&t));
+            g_object_set_data(G_OBJECT(renderer), "text", (gpointer)buffer);
+        } else {
+            g_object_set_data(
+                    G_OBJECT(renderer), "text", "");
+        }
+    }
+}
+

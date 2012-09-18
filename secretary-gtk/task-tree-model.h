@@ -6,6 +6,8 @@
 #include <gtk/gtk.h>
 #include <secretary-gtk/application.h>
 
+#define SCT_GTK_TASK_TREE_MODEL_DATE_SIZE 12
+
 enum {
     SCT_GTK_TASK_DONE_COLUMN = 0,
     SCT_GTK_TASK_DESCRIPTION_COLUMN,

@@ -2,8 +2,6 @@
 
 #include "secretary-gtk/task-tree-model.h"
 
-#define DATE_SIZE 12
-
 static void _sct_gtk_task_tree_model_show_all(GtkTreeModel *model, Secretary *secretary);
 
 GtkTreeModel *sct_gtk_task_tree_model_new(Secretary *secretary) {
@@ -75,10 +73,10 @@ void sct_gtk_task_tree_model_add_task(GtkTreeModel *model, Task *task) {
     Project *project = task_get_project(task);
     gtk_list_store_set(store, &iter, SCT_GTK_TASK_PROJECT_COLUMN,
             project? project_get_name(project) : "" , -1);
-    char buffer[DATE_SIZE] = "";
+    char buffer[SCT_GTK_TASK_TREE_MODEL_DATE_SIZE] = "";
     if (task_is_scheduled(task)) {
         time_t secs = task_get_scheduled_date(task);
-        strftime(buffer, DATE_SIZE, "%d-%m-%Y", localtime(&secs));
+        strftime(buffer, SCT_GTK_TASK_TREE_MODEL_DATE_SIZE, "%d-%m-%Y", localtime(&secs));
     }
     gtk_list_store_set(store, &iter, SCT_GTK_TASK_DATE_COLUMN,
             buffer, -1);
