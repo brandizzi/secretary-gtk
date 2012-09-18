@@ -79,3 +79,22 @@ void sct_gtk_task_list_view_description_cell_data_func(
     }
 }
 
+void sct_gtk_task_list_view_project_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
+    Task *task = NULL;
+    gtk_tree_model_get(model, iter,SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+            &task, -1);
+    if (task) {
+        if (task_has_project(task)) {
+            Project *project = task_get_project(task);
+            g_object_set_data(
+                    G_OBJECT(renderer), "text",
+                    (gpointer)project_get_name(project));
+        } else {
+            g_object_set_data(
+                    G_OBJECT(renderer), "text", "");
+        }
+    }
+}
+

@@ -77,10 +77,78 @@ static void test_sct_gtk_task_list_view_get_description(CuTest *test) {
     
 }
 
+static void test_sct_gtk_task_list_view_get_project(CuTest *test) {
+    Secretary *secretary = secretary_new();
+    Task *t1 = secretary_create_task(secretary, "1st task"),
+         *t2 = secretary_create_task(secretary, "2nd task"),
+         *t3 = secretary_create_task(secretary, "3rd task"),
+         *t4 = secretary_create_task(secretary, "4th task"),
+         *task;
+     Project *project1 = secretary_create_project(secretary, "Project 1"),
+             *project2 = secretary_create_project(secretary, "Project 2");
+     
+    secretary_move_task_to_project(secretary, project1, t1);
+    secretary_move_task_to_project(secretary, project2, t3);
+    
+    GtkTreeModel *model = sct_gtk_task_tree_model_new(secretary);
+    sct_gtk_task_tree_model_show_inbox(model, NULL);
+
+    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+    GtkTreeIter iter;
+    
+    // Not in inbox
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    sct_gtk_task_list_view_project_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "");
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "2nd task");
+    
+    CuAssertTrue(test, gtk_tree_model_iter_next(model, &iter));
+    sct_gtk_task_list_view_project_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "");
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "4th task");
+
+    
+    // In projects
+    sct_gtk_task_tree_model_show_project(model, project1);
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    sct_gtk_task_list_view_project_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "Project 1");
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "1st task");
+    
+    sct_gtk_task_tree_model_show_project(model, project2);
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    sct_gtk_task_list_view_project_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "Project 2");
+    sct_gtk_task_list_view_description_cell_data_func(
+            NULL, renderer, model, &iter, NULL);
+    CuAssertStrEquals(test, 
+            g_object_get_data(G_OBJECT(renderer), "text"), "3rd task");
+    
+}
+
+
 CuSuite *test_sct_gtk_task_list_view_suite(void) {
     CuSuite *suite  = CuSuiteNew();
     SUITE_ADD_TEST(suite, test_sct_gtk_task_list_view_get_done);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_list_view_get_description);
+    SUITE_ADD_TEST(suite, test_sct_gtk_task_list_view_get_project);
     return suite;
 }
 

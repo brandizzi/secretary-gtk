@@ -24,6 +24,9 @@ void sct_gtk_task_list_view_done_cell_data_func(
 void sct_gtk_task_list_view_description_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
+void sct_gtk_task_list_view_project_cell_data_func(
+        GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
+        GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
 #endif /* _SECRETARY_GTK_SECRETARY_LISTVIEW_H */
 
