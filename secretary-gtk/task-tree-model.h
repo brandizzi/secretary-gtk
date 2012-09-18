@@ -15,19 +15,19 @@ enum {
     SCT_GTK_TASK_COLUMN_COUNT
 };
 
-GtkListStore *sct_gtk_task_tree_model_new(Secretary *secretary);
+GtkTreeModel *sct_gtk_task_tree_model_new(Secretary *secretary);
 Secretary *sct_gtk_task_tree_model_get_secretary(GtkTreeModel *model);
 
 void sct_gtk_task_tree_model_show_inbox(
-        GtkListStore *model,void *ignored_data);
+        GtkTreeModel *model,void *ignored_data);
 void sct_gtk_task_tree_model_show_scheduled(
-        GtkListStore *model, void *ignored_data);
+        GtkTreeModel *model, void *ignored_data);
 void sct_gtk_task_tree_model_show_scheduled_for_today(
-        GtkListStore *model, void *ignored_data);
+        GtkTreeModel *model, void *ignored_data);
 void sct_gtk_task_tree_model_show_project(
-        GtkListStore *model, void *data);
+        GtkTreeModel *model, void *data);
         
-void sct_gtk_task_tree_model_add_task(GtkListStore *model, Task *task);
+void sct_gtk_task_tree_model_add_task(GtkTreeModel *model, Task *task);
 
 #endif /* _SECRETARY_GTK_PROJECT_TREE_MODEL_H */
 

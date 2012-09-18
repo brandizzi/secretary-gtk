@@ -7,11 +7,10 @@ static void test_sct_gtk_task_tree_model_has_tasks(CuTest *test) {
     Task *t1 = secretary_create_task(secretary, "My task"),
          *t2 = secretary_create_task(secretary, "Your task"),
          *task;
-    GtkTreeModel *model = 
-            GTK_TREE_MODEL(sct_gtk_task_tree_model_new(secretary));
+    GtkTreeModel *model = sct_gtk_task_tree_model_new(secretary);
     GtkTreeIter iter;
     
-    sct_gtk_task_tree_model_show_inbox((GtkListStore*)model, NULL);
+    sct_gtk_task_tree_model_show_inbox(model, NULL);
     
     CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
     gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 

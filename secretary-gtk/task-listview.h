@@ -12,7 +12,7 @@
 GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app);
 
 typedef void (SctGtkChangeTaskListViewContentCallback)(
-        GtkListStore *store, void *data);
+        GtkTreeModel *model, void *data);
 
 void sct_gtk_task_listview_change_content(
         GtkTreeView *task_treeview,
