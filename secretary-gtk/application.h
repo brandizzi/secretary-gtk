@@ -12,11 +12,11 @@ typedef struct {
     Secretary *secretary;
     GtkTreeModel 
             *project_tree_store, 
-            *task_list_store;
+            *task_tree_model;
     GtkWidget 
             *widget, 
             *perspective_tree_view, 
-            *task_list_view,
+            *task_tree_view,
             *main_window,
             *new_task_dialog;
     GtkToolItem 

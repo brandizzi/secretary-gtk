@@ -24,12 +24,12 @@ static void test_sct_gtk_app_select_inbox(CuTest *test) {
             SCT_GTK_PROJECT_PATH_INBOX);
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     
     CuAssertStrEquals(test, "Inbox task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     
@@ -55,11 +55,11 @@ static void test_sct_gtk_app_select_inbox_at_start(CuTest *test) {
             SCT_GTK_PROJECT_PATH_INBOX);
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Inbox task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     
@@ -85,15 +85,15 @@ static void test_sct_gtk_app_select_scheduled(CuTest *test) {
             SCT_GTK_PROJECT_PATH_SCHEDULED);
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Scheduled task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, "Future task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 2);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 2);
     CuAssertStrEquals(test, NULL, name);
     
     sct_gtk_application_free(app);
@@ -118,11 +118,11 @@ static void test_sct_gtk_app_select_scheduled_for_today(CuTest *test) {
             SCT_GTK_PROJECT_PATH_SCHEDULED_FOR_TODAY);
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Scheduled task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     
@@ -148,11 +148,11 @@ static void test_sct_gtk_app_select_project_child(CuTest *test) {
             SCT_GTK_PROJECT_PATH_NTH_PROJECT(0));
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Project task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     
@@ -181,11 +181,11 @@ static void test_sct_gtk_app_select_project_should_not_crash(CuTest *test) {
             SCT_GTK_PROJECT_PATH_PROJECT);
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Project task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     
@@ -219,11 +219,11 @@ static void test_sct_gtk_app_select_collapsed_project_should_not_crash(
     return;
 
     gchar *name = 
-        test_sct_gtk_util_get_task_description_from_list_view(app, 0);
+        test_sct_gtk_util_get_task_description_from_tree_view(app, 0);
     CuAssertStrEquals(test, "Project task", name);
     g_free(name);
     
-    name = test_sct_gtk_util_get_task_description_from_list_view(app, 1);
+    name = test_sct_gtk_util_get_task_description_from_tree_view(app, 1);
     CuAssertStrEquals(test, NULL, name);
     g_free(name);
     

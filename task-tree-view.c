@@ -5,7 +5,7 @@
 #include "secretary-gtk/gettext.h"
 
 
-GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
+GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
     GtkCellRenderer *done_renderer = gtk_cell_renderer_toggle_new(),
             *description_renderer = gtk_cell_renderer_text_new(),
@@ -13,16 +13,16 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
             *date_renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Done"), done_renderer, 
-            sct_gtk_task_list_view_done_cell_data_func, NULL, NULL);
+            sct_gtk_task_tree_view_done_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Description"), description_renderer, 
-            sct_gtk_task_list_view_description_cell_data_func, NULL, NULL);
+            sct_gtk_task_tree_view_description_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Project"), project_renderer, 
-            sct_gtk_task_list_view_project_cell_data_func, NULL, NULL);
+            sct_gtk_task_tree_view_project_cell_data_func, NULL, NULL);
     gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
             _("Scheduled to"), date_renderer, 
-            sct_gtk_task_list_view_scheduled_date_cell_data_func, NULL, NULL);
+            sct_gtk_task_tree_view_scheduled_date_cell_data_func, NULL, NULL);
     
     GtkTreeModel *model = sct_gtk_task_tree_model_new(app->secretary);
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
@@ -34,13 +34,13 @@ GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app) {
     gtk_widget_show(window);
     
 
-    app->task_list_store = model;
-    app->task_list_view = treeview;
+    app->task_tree_model = model;
+    app->task_tree_view = treeview;
 
     return window;
 }
 
-void sct_gtk_task_listview_change_content(
+void sct_gtk_task_tree_view_change_content(
         GtkTreeView *task_treeview,
         SctGtkChangeTaskListViewContentCallback *callback, void *data) {
     GtkTreeModel *model = 
@@ -53,7 +53,7 @@ void sct_gtk_task_listview_change_content(
 }
 
 
-void sct_gtk_task_list_view_done_cell_data_func(
+void sct_gtk_task_tree_view_done_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
     Task *task = NULL;
@@ -65,7 +65,7 @@ void sct_gtk_task_list_view_done_cell_data_func(
     }
 }
 
-void sct_gtk_task_list_view_description_cell_data_func(
+void sct_gtk_task_tree_view_description_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
     Task *task = NULL;
@@ -77,7 +77,7 @@ void sct_gtk_task_list_view_description_cell_data_func(
     }
 }
 
-void sct_gtk_task_list_view_project_cell_data_func(
+void sct_gtk_task_tree_view_project_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
     Task *task = NULL;
@@ -96,7 +96,7 @@ void sct_gtk_task_list_view_project_cell_data_func(
     }
 }
 
-void sct_gtk_task_list_view_scheduled_date_cell_data_func(
+void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
     Task *task = NULL;

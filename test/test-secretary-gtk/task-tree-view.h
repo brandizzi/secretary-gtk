@@ -3,6 +3,6 @@
 
 #include <CuTest.h>
 
-CuSuite *test_sct_gtk_task_list_view_suite(void);
+CuSuite *test_sct_gtk_task_tree_view_suite(void);
 
 #endif /* TEST_SCT_GTK_TASK_LIST_VIEW_H */

@@ -56,18 +56,18 @@ static void _on_cursor_changed(GtkTreeView *perspective_tree_view, gpointer data
     gint *indices = gtk_tree_path_get_indices(path);
     switch (indices[0]) {
     case SCT_GTK_PROJECT_INDEX_INBOX:
-        sct_gtk_task_listview_change_content(
-                GTK_TREE_VIEW(app->task_list_view),
+        sct_gtk_task_tree_view_change_content(
+                GTK_TREE_VIEW(app->task_tree_view),
                 sct_gtk_task_tree_model_show_inbox, NULL);
         break;
     case SCT_GTK_PROJECT_INDEX_SCHEDULED:
-        sct_gtk_task_listview_change_content(
-                GTK_TREE_VIEW(app->task_list_view),
+        sct_gtk_task_tree_view_change_content(
+                GTK_TREE_VIEW(app->task_tree_view),
                 sct_gtk_task_tree_model_show_scheduled, NULL);
         break;
     case SCT_GTK_PROJECT_INDEX_SCHEDULED_FOR_TODAY:
-        sct_gtk_task_listview_change_content(
-                GTK_TREE_VIEW(app->task_list_view),
+        sct_gtk_task_tree_view_change_content(
+                GTK_TREE_VIEW(app->task_tree_view),
                 sct_gtk_task_tree_model_show_scheduled_for_today, NULL);
         break;
     case SCT_GTK_PROJECT_INDEX_PROJECT:
@@ -79,8 +79,8 @@ static void _on_cursor_changed(GtkTreeView *perspective_tree_view, gpointer data
         } else {
             Project *project = secretary_get_nth_project(
                     app->secretary, indices[1]);
-            sct_gtk_task_listview_change_content(
-                    GTK_TREE_VIEW(app->task_list_view),
+            sct_gtk_task_tree_view_change_content(
+                    GTK_TREE_VIEW(app->task_tree_view),
                     sct_gtk_task_tree_model_show_project, project);
         }
         break;

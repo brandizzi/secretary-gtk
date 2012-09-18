@@ -18,11 +18,11 @@ void test_sct_gtk_util_create_project_and_four_tasks(
     secretary_schedule_task(secretary, *future_task, time(NULL)+24*60*60*10);
 }
 
-gchar *test_sct_gtk_util_get_task_description_from_list_view(
+gchar *test_sct_gtk_util_get_task_description_from_tree_view(
         SctGtkApplication *app, int index) {
     // Evaluating results
     GtkTreeIter iter;
-    GtkTreeModel *task_store = app->task_list_store;
+    GtkTreeModel *task_store = app->task_tree_model;
     gtk_tree_model_get_iter_first(task_store, &iter);
     char *description;
     
@@ -34,7 +34,7 @@ gchar *test_sct_gtk_util_get_task_description_from_list_view(
     if (!gtk_list_store_iter_is_valid(GTK_LIST_STORE(task_store), &iter)) {
         return NULL;
     }
-    sct_gtk_task_list_view_description_cell_data_func(
+    sct_gtk_task_tree_view_description_cell_data_func(
             NULL, renderer, task_store, &iter, NULL);
     g_object_get(G_OBJECT(renderer), "text", &description, NULL);
     return description;

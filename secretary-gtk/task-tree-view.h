@@ -9,25 +9,25 @@
 #include "secretary-gtk/task-tree-model.h"
 #include "secretary-gtk/application.h"
 
-GtkWidget *sct_gtk_task_listview_new(SctGtkApplication *app);
+GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app);
 
 typedef void (SctGtkChangeTaskListViewContentCallback)(
         GtkTreeModel *model, void *data);
 
-void sct_gtk_task_listview_change_content(
+void sct_gtk_task_tree_view_change_content(
         GtkTreeView *task_treeview,
         SctGtkChangeTaskListViewContentCallback *callback, void *data);
 
-void sct_gtk_task_list_view_done_cell_data_func(
+void sct_gtk_task_tree_view_done_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
-void sct_gtk_task_list_view_description_cell_data_func(
+void sct_gtk_task_tree_view_description_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
-void sct_gtk_task_list_view_project_cell_data_func(
+void sct_gtk_task_tree_view_project_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
-void sct_gtk_task_list_view_scheduled_date_cell_data_func(
+void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
         GtkTreeViewColumn *column, GtkCellRenderer *renderer, 
         GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
