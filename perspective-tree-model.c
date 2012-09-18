@@ -3,7 +3,7 @@
 #include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
-GtkTreeStore *sct_gtk_perspective_tree_model_new(Secretary *secretary) {
+GtkTreeModel *sct_gtk_perspective_tree_model_new(Secretary *secretary) {
     GtkTreeStore *model = gtk_tree_store_new(SCT_GTK_PROJECT_COLUMN_COUNT,
             G_TYPE_STRING);
     GtkTreeIter iter, child;
@@ -27,5 +27,5 @@ GtkTreeStore *sct_gtk_perspective_tree_model_new(Secretary *secretary) {
         gtk_tree_store_set(model, &child, SCT_GTK_PROJECT_PERSPECTIVE_COLUMN,
                 project_get_name(project), -1);
     }
-    return model;
+    return GTK_TREE_MODEL(model);
 }
