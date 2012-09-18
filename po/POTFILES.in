@@ -3,7 +3,7 @@ panel.c
 perspective-tree-view.c
 perspective-tree-model.c
 project-tree-model.c
-task-listview.c
+task-tree-view.c
 task-tree-model.c
 utils.c
 application.c

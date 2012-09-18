@@ -1,5 +1,5 @@
-#include "test/test-secretary-gtk/task-listview.h"
-#include "secretary-gtk/task-listview.h"
+#include "test/test-secretary-gtk/task-tree-view.h"
+#include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
 static void test_sct_gtk_task_list_view_get_done(CuTest *test) {

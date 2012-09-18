@@ -37,19 +37,19 @@ msgstr "Agendadas"
 msgid "Projects"
 msgstr "Projetos"
 
-#: task-listview.c:15
+#: task-tree-view.c:15
 msgid "Done"
 msgstr "Feito"
 
-#: task-listview.c:18
+#: task-tree-view.c:18
 msgid "Description"
 msgstr "Descrição"
 
-#: task-listview.c:21
+#: task-tree-view.c:21
 msgid "Project"
 msgstr "Projeto"
 
-#: task-listview.c:24
+#: task-tree-view.c:24
 msgid "Scheduled to"
 msgstr "Agendada para"
 

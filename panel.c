@@ -2,7 +2,7 @@
 
 #include "secretary-gtk/panel.h"
 #include "secretary-gtk/perspective-tree-view.h"
-#include "secretary-gtk/task-listview.h"
+#include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
 

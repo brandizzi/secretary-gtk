@@ -1,7 +1,7 @@
 #include "config.h"
 
 #include "secretary-gtk/task-tree-model.h"
-#include "secretary-gtk/task-listview.h"
+#include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
 

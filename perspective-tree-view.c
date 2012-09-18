@@ -3,7 +3,7 @@
 #include "secretary-gtk/perspective-tree-view.h"
 #include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/task-tree-model.h"
-#include "secretary-gtk/task-listview.h"
+#include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
 static void _on_cursor_changed(GtkTreeView *perspective_tree_view, gpointer data);

@@ -6,7 +6,7 @@ secretary_module_srcs =	secretary-gtk/widget.h widget.c \
 	secretary-gtk/perspective-tree-view.h perspective-tree-view.c \
 	perspective-tree-model.c secretary-gtk/perspective-tree-model.h \
     project-tree-model.c secretary-gtk/project-tree-model.h \
-	secretary-gtk/task-listview.h task-listview.c \
+	secretary-gtk/task-tree-view.h task-tree-view.c \
 	secretary-gtk/task-tree-model.h task-tree-model.c \
 	secretary-gtk/utils.h utils.c \
 	secretary-gtk/application.h application.c \
@@ -29,8 +29,8 @@ runtests_SOURCES = test/runtests.c CuTest.c CuTest.h \
 	test/test-task-tree-model.c \
 	test/test-secretary-gtk/task-tree-model.h \
 	test/test-project-tree-model.c \
-	test/test-secretary-gtk/task-listview.h \
-	test/test-task-list-view.c \
+	test/test-secretary-gtk/task-tree-view.h \
+	test/test-task-tree-view.c \
 	test/test-secretary-gtk/project-tree-model.h \
 	test/test-application.c test/test-secretary-gtk/application.h \
 	test/test-new-task-dialog.c test/test-secretary-gtk/new-task-dialog.h \
