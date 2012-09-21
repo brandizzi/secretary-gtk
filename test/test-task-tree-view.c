@@ -236,24 +236,58 @@ static void test_sct_gtk_task_tree_view_edit_done(CuTest *test) {
 
     GtkTreeIter iter;
     char *path = "0";
-    gboolean done;
     CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
-    g_object_get(G_OBJECT(renderer), "active", &done, NULL);
-    CuAssertTrue(test, ! done);
+    CuAssertTrue(test, ! task_is_done(task));
     
     g_signal_emit_by_name(G_OBJECT(renderer), "toggled", path, NULL);
     
     CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
-    g_object_get(G_OBJECT(renderer), "active", &done, NULL);
-    CuAssertTrue(test, done);
+    CuAssertTrue(test, task_is_done(task));
     
     g_signal_emit_by_name(G_OBJECT(renderer), "toggled", path, NULL);
     
     CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
-    g_object_get(G_OBJECT(renderer), "active", &done, NULL);
-    CuAssertTrue(test, ! done);
+    CuAssertTrue(test, ! task_is_done(task));
+
 }
 
+static void test_sct_gtk_task_tree_view_edit_done_and_save(CuTest *test) {
+    remove("tempfile");
+    Notebook *notebook = notebook_new("tempfile");
+    Secretary *secretary = notebook_get_secretary(notebook);
+    Task *task = secretary_create_task(secretary, "My task");
+    
+    SctGtkApplication *app = sct_gtk_application_new(notebook);
+    GtkWidget *view = app->task_tree_view;
+    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+    sct_gtk_task_tree_model_show_inbox(model, NULL);
+
+    GtkTreeViewColumn *done_column = gtk_tree_view_get_column(
+            GTK_TREE_VIEW(view), SCT_GTK_TASK_TREE_VIEW_DONE_COLUMN);
+    GList *renderers =  gtk_cell_layout_get_cells(
+            GTK_CELL_LAYOUT(done_column));
+    GtkCellRenderer *renderer = GTK_CELL_RENDERER(g_list_nth_data(renderers, 0));
+    g_list_free(renderers);
+
+    GtkTreeIter iter;
+    char *path = "0";
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    CuAssertTrue(test, ! task_is_done(task));
+
+    // Emit
+    g_signal_emit_by_name(G_OBJECT(renderer), "toggled", path, NULL);
+    
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    CuAssertTrue(test, task_is_done(task));
+    
+    notebook_free(notebook);
+    notebook = notebook_new("tempfile");
+    secretary = notebook_get_secretary(notebook);
+    
+    task = secretary_get_nth_task(secretary, 0);
+    CuAssertTrue(test, task != NULL);
+    CuAssertTrue(test, task_is_done(task));
+}
 
 CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     CuSuite *suite  = CuSuiteNew();
@@ -262,6 +296,7 @@ CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_get_project);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_get_scheduled);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_done);
+    SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_done_and_save);
     return suite;
 }
 
