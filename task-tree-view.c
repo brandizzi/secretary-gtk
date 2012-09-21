@@ -20,7 +20,7 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             _("Done"), done_renderer, 
             sct_gtk_task_tree_view_done_cell_data_func, NULL, NULL);
     g_signal_connect( G_OBJECT(done_renderer), "toggled",
-            G_CALLBACK(on_done_cell_renderer_toggle_toggled), model);
+            G_CALLBACK(on_done_cell_renderer_toggle_toggled), app);
             
     gtk_tree_view_insert_column_with_data_func(
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_DESCRIPTION_COLUMN,
@@ -129,8 +129,9 @@ void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
 
 static void on_done_cell_renderer_toggle_toggled(
         GtkCellRendererToggle *renderer, gchar *path, gpointer user_data) {
-    GtkTreeModel *model = user_data;
-    gboolean value = gtk_cell_renderer_toggle_get_active(renderer);
+    SctGtkApplication *app = user_data;
+    GtkTreeModel *model = app->task_tree_model;
+    //gboolean value = gtk_cell_renderer_toggle_get_active(renderer);
     
     GtkTreeIter iter;
     GtkTreePath *tpath =  gtk_tree_path_new_from_string(path);
@@ -141,6 +142,8 @@ static void on_done_cell_renderer_toggle_toggled(
     gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
             &task, -1);
     task_switch_done_status(task);
+    
+    notebook_save(app->notebook);
     
     g_object_set(G_OBJECT(renderer), "active", task_is_done(task), NULL);
 }   
