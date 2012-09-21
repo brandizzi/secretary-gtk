@@ -11,16 +11,23 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             *description_renderer = gtk_cell_renderer_text_new(),
             *project_renderer = gtk_cell_renderer_combo_new(),
             *date_renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
+            
+    gtk_tree_view_insert_column_with_data_func(
+            GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_DONE_COLUMN,
             _("Done"), done_renderer, 
             sct_gtk_task_tree_view_done_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
+            
+    gtk_tree_view_insert_column_with_data_func(
+            GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_DESCRIPTION_COLUMN,
             _("Description"), description_renderer, 
             sct_gtk_task_tree_view_description_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
+            
+    gtk_tree_view_insert_column_with_data_func(
+            GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_PROJECT_COLUMN,
             _("Project"), project_renderer, 
             sct_gtk_task_tree_view_project_cell_data_func, NULL, NULL);
-    gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(treeview), -1,
+    gtk_tree_view_insert_column_with_data_func(
+            GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_SCHEDULE_DATE_COLUMN,
             _("Scheduled to"), date_renderer, 
             sct_gtk_task_tree_view_scheduled_date_cell_data_func, NULL, NULL);
     

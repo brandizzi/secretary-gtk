@@ -9,6 +9,14 @@
 #include "secretary-gtk/task-tree-model.h"
 #include "secretary-gtk/application.h"
 
+enum {
+    SCT_GTK_TASK_TREE_VIEW_DONE_COLUMN = 0,
+    SCT_GTK_TASK_TREE_VIEW_DESCRIPTION_COLUMN,
+    SCT_GTK_TASK_TREE_VIEW_PROJECT_COLUMN,
+    SCT_GTK_TASK_TREE_VIEW_SCHEDULE_DATE_COLUMN,
+    SCT_GTK_TASK_TREE_VIEW_COLUMN_COUNT
+};
+
 GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app);
 
 typedef void (SctGtkChangeTaskListViewContentCallback)(
