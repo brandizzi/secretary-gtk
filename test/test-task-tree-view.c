@@ -223,8 +223,8 @@ static void test_sct_gtk_task_tree_view_edit_done(CuTest *test) {
     
     SctGtkApplication *app = sct_gtk_application_new(notebook);
     
-    GtkWidget *view = sct_gtk_task_tree_view_new(app);
-    view = gtk_bin_get_child(GTK_BIN(view));
+    GtkWidget *view = app->task_tree_view;
+    //view = gtk_bin_get_child(GTK_BIN(view));
     GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
     sct_gtk_task_tree_model_show_inbox(model, NULL);
 

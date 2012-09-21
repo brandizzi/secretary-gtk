@@ -122,8 +122,7 @@ void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
                 _("%d-%m-%Y"), localtime(&t));
             g_object_set(G_OBJECT(renderer), "text", (gpointer)buffer, NULL);
         } else {
-            g_object_set(
-                    G_OBJECT(renderer), "text", "", NULL);
+            g_object_set(G_OBJECT(renderer), "text", "", NULL);
         }
     }
 }
