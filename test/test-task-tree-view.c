@@ -289,6 +289,37 @@ static void test_sct_gtk_task_tree_view_edit_done_and_save(CuTest *test) {
     CuAssertTrue(test, task_is_done(task));
 }
 
+static void test_sct_gtk_task_tree_view_edit_description(CuTest *test) {
+    remove("tempfile");
+    Notebook *notebook = notebook_new("tempfile");
+    Secretary *secretary = notebook_get_secretary(notebook);
+    Task *task = secretary_create_task(secretary, "My task");
+    
+    SctGtkApplication *app = sct_gtk_application_new(notebook);
+    
+    GtkWidget *view = app->task_tree_view;
+    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+    sct_gtk_task_tree_model_show_inbox(model, NULL);
+
+    GtkTreeViewColumn *done_column = gtk_tree_view_get_column(
+            GTK_TREE_VIEW(view), SCT_GTK_TASK_TREE_VIEW_DESCRIPTION_COLUMN);
+    GList *renderers =  gtk_cell_layout_get_cells(
+            GTK_CELL_LAYOUT(done_column));
+    GtkCellRenderer *renderer = GTK_CELL_RENDERER(g_list_nth_data(renderers, 0));
+    g_list_free(renderers);
+
+    GtkTreeIter iter;
+    char *path = "0";
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    CuAssertStrEquals(test, "My task", task_get_description(task));
+    
+    g_signal_emit_by_name(G_OBJECT(renderer), "edited", path, "My updated task");
+    
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    CuAssertStrEquals(test, "My updated task", task_get_description(task));
+}
+
+
 CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     CuSuite *suite  = CuSuiteNew();
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_get_done);
@@ -297,6 +328,7 @@ CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_get_scheduled);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_done);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_done_and_save);
+    SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_description);
     return suite;
 }
 
