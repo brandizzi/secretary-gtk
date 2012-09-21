@@ -4,6 +4,8 @@
 #include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
+static void on_done_cell_renderer_toggle_toggled(
+        GtkCellRendererToggle *renderer, gchar *path, gpointer user_data);
 
 GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
@@ -11,11 +13,14 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             *description_renderer = gtk_cell_renderer_text_new(),
             *project_renderer = gtk_cell_renderer_combo_new(),
             *date_renderer = gtk_cell_renderer_text_new();
+    GtkTreeModel *model = sct_gtk_task_tree_model_new(app->secretary);
             
     gtk_tree_view_insert_column_with_data_func(
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_DONE_COLUMN,
             _("Done"), done_renderer, 
             sct_gtk_task_tree_view_done_cell_data_func, NULL, NULL);
+    g_signal_connect( G_OBJECT(done_renderer), "toggled",
+            G_CALLBACK(on_done_cell_renderer_toggle_toggled), model);
             
     gtk_tree_view_insert_column_with_data_func(
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_DESCRIPTION_COLUMN,
@@ -31,7 +36,6 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             _("Scheduled to"), date_renderer, 
             sct_gtk_task_tree_view_scheduled_date_cell_data_func, NULL, NULL);
     
-    GtkTreeModel *model = sct_gtk_task_tree_model_new(app->secretary);
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);
     
@@ -123,4 +127,22 @@ void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
         }
     }
 }
+
+static void on_done_cell_renderer_toggle_toggled(
+        GtkCellRendererToggle *renderer, gchar *path, gpointer user_data) {
+    GtkTreeModel *model = user_data;
+    gboolean value = gtk_cell_renderer_toggle_get_active(renderer);
+    
+    GtkTreeIter iter;
+    GtkTreePath *tpath =  gtk_tree_path_new_from_string(path);
+    gtk_tree_model_get_iter(model, &iter, tpath);
+    
+    Secretary *secretary = sct_gtk_task_tree_model_get_secretary(model);
+    Task *task;
+    gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+            &task, -1);
+    task_switch_done_status(task);
+    
+    g_object_set(G_OBJECT(renderer), "active", task_is_done(task), NULL);
+}   
 
