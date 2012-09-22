@@ -4,7 +4,7 @@
 #include "secretary-gtk/gettext.h"
 
 GtkTreeModel *sct_gtk_perspective_tree_model_new(Secretary *secretary) {
-    GtkTreeStore *model = gtk_tree_store_new(SCT_GTK_PROJECT_COLUMN_COUNT,
+    GtkTreeStore *model = gtk_tree_store_new(SCT_GTK_PROJECT_TREE_MODEL_COLUMN_COUNT,
             G_TYPE_STRING);
     GtkTreeIter iter, child;
     gtk_tree_store_append(model, &iter, NULL);
