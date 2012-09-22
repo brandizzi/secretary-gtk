@@ -30,8 +30,7 @@ GtkWidget *sct_gtk_new_task_dialog_new(
     ntds->description_entry = gtk_entry_new();
     ntds->scheduled_for_entry = sct_gtk_date_entry_new();
     
-    ntds->project_model = GTK_TREE_MODEL(
-            sct_gtk_project_tree_model_new(ntds->secretary));
+    ntds->project_model = sct_gtk_project_tree_model_new(ntds->secretary);
     GtkCellRenderer * cell = gtk_cell_renderer_text_new();
     ntds->project_combo_box = gtk_combo_box_new_with_model(ntds->project_model);
     gtk_cell_layout_pack_start(

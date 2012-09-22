@@ -18,6 +18,7 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
             app, SCT_GTK_PROJECT_PATH_INBOX);
     
     app->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_maximize(GTK_WINDOW(app->main_window));
 
     app->new_task_dialog = sct_gtk_new_task_dialog_new(
             app->secretary, NULL);
@@ -31,8 +32,6 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
 void sct_gtk_application_free(SctGtkApplication *application) {
  // TODO
 }
-
-
 
 void sct_gtk_application_select_path_on_perspective_tree_view(
         SctGtkApplication *app, const gchar *path) {

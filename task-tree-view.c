@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include "secretary-gtk/task-tree-model.h"
+#include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/gettext.h"
 
@@ -37,6 +38,11 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_PROJECT_COLUMN,
             _("Project"), project_renderer, 
             sct_gtk_task_tree_view_project_cell_data_func, NULL, NULL);
+    g_object_set(
+            G_OBJECT(project_renderer), "model", 
+            sct_gtk_project_tree_model_new(app->secretary),
+            "editable", true, NULL);
+
     gtk_tree_view_insert_column_with_data_func(
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_SCHEDULE_DATE_COLUMN,
             _("Scheduled to"), date_renderer, 
@@ -46,7 +52,7 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     g_object_unref(model);
     
     GtkWidget *window = gtk_scrolled_window_new(NULL,  NULL);
-    gtk_container_add(GTK_CONTAINER(window), treeview);
+    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(window), treeview);
     gtk_widget_show(GTK_WIDGET(treeview));
     gtk_widget_show(window);
     
