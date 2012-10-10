@@ -10,6 +10,8 @@ static void on_done_cell_renderer_toggled(
 static void on_description_cell_renderer_edited(
         GtkCellRendererText *renderer, gchar *path, gchar *new_text, 
         gpointer user_data);
+void on_project_cell_renderer_changed(GtkCellRendererCombo *renderer, 
+        gchar *path_string, GtkTreeIter *new_iter, gpointer user_data);
 
 GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     GtkWidget *treeview = gtk_tree_view_new();
@@ -31,7 +33,7 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             _("Description"), description_renderer, 
             sct_gtk_task_tree_view_description_cell_data_func, NULL, NULL);
     g_object_set(G_OBJECT(description_renderer), "editable", true, NULL);
-    g_signal_connect( G_OBJECT(description_renderer), "edited",
+    g_signal_connect(G_OBJECT(description_renderer), "edited",
             G_CALLBACK(on_description_cell_renderer_edited), app);
 
     gtk_tree_view_insert_column_with_data_func(
@@ -41,7 +43,12 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     g_object_set(
             G_OBJECT(project_renderer), "model", 
             sct_gtk_project_tree_model_new(app->secretary),
-            "editable", true, NULL);
+            "editable", true,
+            "text-column", SCT_GTK_PROJECT_TREE_MODEL_NAME_COLUMN,
+            "has-entry", false,
+            NULL);
+    g_signal_connect(G_OBJECT(project_renderer), "changed",
+            G_CALLBACK(on_project_cell_renderer_changed), app);
 
     gtk_tree_view_insert_column_with_data_func(
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_SCHEDULE_DATE_COLUMN,
@@ -140,14 +147,14 @@ void sct_gtk_task_tree_view_scheduled_date_cell_data_func(
 }
 
 static void on_done_cell_renderer_toggled(
-        GtkCellRendererToggle *renderer, gchar *path, gpointer user_data) {
+        GtkCellRendererToggle *renderer, gchar *path_string, gpointer user_data) {
     SctGtkApplication *app = user_data;
     GtkTreeModel *model = app->task_tree_model;
     //gboolean value = gtk_cell_renderer_toggle_get_active(renderer);
     
     GtkTreeIter iter;
-    GtkTreePath *tpath =  gtk_tree_path_new_from_string(path);
-    gtk_tree_model_get_iter(model, &iter, tpath);
+    GtkTreePath *path =  gtk_tree_path_new_from_string(path_string);
+    gtk_tree_model_get_iter(model, &iter, path);
     
     Secretary *secretary = sct_gtk_task_tree_model_get_secretary(model);
     Task *task;
@@ -161,15 +168,15 @@ static void on_done_cell_renderer_toggled(
 }
 
 static void on_description_cell_renderer_edited(
-        GtkCellRendererText *renderer, gchar *path, gchar *new_text, 
+        GtkCellRendererText *renderer, gchar *path_string, gchar *new_text, 
         gpointer user_data) {
     SctGtkApplication *app = user_data;
     GtkTreeModel *model = app->task_tree_model;
     Secretary *secretary = app->secretary;
     
     GtkTreeIter iter;
-    GtkTreePath *tpath =  gtk_tree_path_new_from_string(path);
-    gtk_tree_model_get_iter(model, &iter, tpath);
+    GtkTreePath *path =  gtk_tree_path_new_from_string(path_string);
+    gtk_tree_model_get_iter(model, &iter, path);
     
     Task *task;
     gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
@@ -179,5 +186,37 @@ static void on_description_cell_renderer_edited(
     notebook_save(app->notebook);
     
     g_object_set(G_OBJECT(renderer), "text", task_get_description(task), NULL);
-}   
+}
+
+void on_project_cell_renderer_changed(GtkCellRendererCombo *renderer, 
+        gchar *path_string, GtkTreeIter *new_iter, gpointer user_data) {
+    SctGtkApplication *app = user_data;
+    GtkTreeModel *model = app->task_tree_model;
+    Secretary *secretary = app->secretary;
+    
+    GtkTreeIter iter;
+    GtkTreePath *path =  gtk_tree_path_new_from_string(path_string);
+    gtk_tree_model_get_iter(model, &iter, path);
+    
+    Task *task;
+    gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, 
+            &task, -1);
+            
+    GtkTreeModel *combo_model;
+    Project *project;
+    g_object_get(G_OBJECT(renderer), "model", &combo_model, NULL);
+
+    gtk_tree_model_get(combo_model, new_iter, 
+            SCT_GTK_PROJECT_TREE_MODEL_PROJECT_COLUMN, &project, -1);
+    if (project) {
+        secretary_move_task_to_project(secretary, project, task);
+        g_object_set(G_OBJECT(renderer), "text", project_get_name(project), NULL);
+    } else {
+        secretary_remove_task_from_project(secretary, task);
+        g_object_set(G_OBJECT(renderer), "text", "", NULL);
+    }
+
+    notebook_save(app->notebook);
+    
+}
 
