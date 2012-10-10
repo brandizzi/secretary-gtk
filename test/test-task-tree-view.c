@@ -1,5 +1,6 @@
 #include "test/test-secretary-gtk/task-tree-view.h"
 #include "secretary-gtk/task-tree-view.h"
+#include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/gettext.h"
 
 #define DATE_SIZE 20
@@ -368,6 +369,63 @@ static void test_sct_gtk_task_tree_view_edit_project(CuTest *test) {
     CuAssertTrue(test, !task_has_project(task));
 }
 
+static void test_sct_gtk_task_tree_view_edit_project_move_task(CuTest *test) {
+    remove("tempfile");
+    Notebook *notebook = notebook_new("tempfile");
+    Secretary *secretary = notebook_get_secretary(notebook);
+    Task *task = secretary_create_task(secretary, "My task");
+    Project *project = secretary_create_project(secretary, "My project");
+    
+    SctGtkApplication *app = sct_gtk_application_new(notebook);
+    
+    GtkWidget *view = app->task_tree_view;
+    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+
+    GtkTreeViewColumn *project_column = gtk_tree_view_get_column(
+            GTK_TREE_VIEW(view), SCT_GTK_TASK_TREE_VIEW_PROJECT_COLUMN);
+    GList *renderers =  gtk_cell_layout_get_cells(
+            GTK_CELL_LAYOUT(project_column));
+    GtkCellRenderer *renderer = GTK_CELL_RENDERER(g_list_nth_data(renderers, 0));
+    g_list_free(renderers);
+    
+    GtkTreeModel *combo_model;
+    GtkTreeIter combo_iter;
+    g_object_get(G_OBJECT(renderer), "model", &combo_model, NULL);
+
+    gtk_tree_view_set_cursor(GTK_TREE_VIEW(app->perspective_tree_view), 
+            gtk_tree_path_new_from_string(SCT_GTK_PROJECT_PATH_INBOX), 
+            NULL, false);
+    GtkTreeIter iter;
+    char *path = "0";
+    Task *t;
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, &t, -1);
+    CuAssertPtrEquals(test, task, t);
+    
+    gtk_tree_model_get_iter_first(combo_model, &combo_iter);
+    gtk_tree_model_iter_next(combo_model, &combo_iter);
+    g_signal_emit_by_name(G_OBJECT(renderer), "changed", path, &combo_iter, app);    
+    CuAssertTrue(test, ! gtk_tree_model_get_iter_first(model, &iter));
+    
+    gtk_tree_view_set_cursor(GTK_TREE_VIEW(app->perspective_tree_view), 
+            gtk_tree_path_new_from_string(SCT_GTK_PROJECT_PATH_NTH_PROJECT(0)), 
+            NULL, false);
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, &t, -1);
+    CuAssertPtrEquals(test, task, t);
+    
+    gtk_tree_model_get_iter_first(combo_model, &combo_iter);
+    g_signal_emit_by_name(G_OBJECT(renderer), "changed", path, &combo_iter, app);
+    CuAssertTrue(test, ! gtk_tree_model_get_iter_first(model, &iter));
+    
+    gtk_tree_view_set_cursor(GTK_TREE_VIEW(app->perspective_tree_view), 
+            gtk_tree_path_new_from_string(SCT_GTK_PROJECT_PATH_INBOX), 
+            NULL, false);
+    CuAssertTrue(test, gtk_tree_model_get_iter_first(model, &iter));
+    gtk_tree_model_get(model, &iter, SCT_GTK_TASK_TREE_MODEL_TASK_COLUMN, &t, -1);
+    CuAssertPtrEquals(test, task, t);
+}
+
 CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     CuSuite *suite  = CuSuiteNew();
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_get_done);
@@ -378,6 +436,7 @@ CuSuite *test_sct_gtk_task_tree_view_suite(void) {
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_done_and_save);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_description);
     SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_project);
+    SUITE_ADD_TEST(suite, test_sct_gtk_task_tree_view_edit_project_move_task);
     return suite;
 }
 

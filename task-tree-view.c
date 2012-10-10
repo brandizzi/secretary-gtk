@@ -203,18 +203,20 @@ void on_project_cell_renderer_changed(GtkCellRendererCombo *renderer,
             &task, -1);
             
     GtkTreeModel *combo_model;
-    Project *project;
+    Project *old_project = task_get_project(task), *new_project;
     g_object_get(G_OBJECT(renderer), "model", &combo_model, NULL);
 
     gtk_tree_model_get(combo_model, new_iter, 
-            SCT_GTK_PROJECT_TREE_MODEL_PROJECT_COLUMN, &project, -1);
-    if (project) {
-        secretary_move_task_to_project(secretary, project, task);
-        g_object_set(G_OBJECT(renderer), "text", project_get_name(project), NULL);
+            SCT_GTK_PROJECT_TREE_MODEL_PROJECT_COLUMN, &new_project, -1);
+    if (new_project) {
+        secretary_move_task_to_project(secretary, new_project, task);
+        g_object_set(G_OBJECT(renderer), "text", project_get_name(new_project), NULL);
     } else {
         secretary_remove_task_from_project(secretary, task);
         g_object_set(G_OBJECT(renderer), "text", "", NULL);
     }
+    g_signal_emit_by_name(G_OBJECT(app->perspective_tree_view), 
+            "cursor-changed", app);
 
     notebook_save(app->notebook);
     
