@@ -5,6 +5,7 @@
 #include "secretary-gtk/perspective-tree-model.h"
 #include "secretary-gtk/utils.h"
 #include "secretary-gtk/new-task-dialog.h"
+#include "secretary-gtk/new-project-dialog.h"
 
 #include <string.h>
 
@@ -20,8 +21,9 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook) {
     app->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_maximize(GTK_WINDOW(app->main_window));
 
-    app->new_task_dialog = sct_gtk_new_task_dialog_new(
-            app->secretary, NULL);
+    app->new_task_dialog = sct_gtk_new_task_dialog_new(app->secretary, NULL); 
+    app->new_project_dialog = sct_gtk_new_project_dialog_new(app->secretary, NULL);
+    
     gtk_container_add(GTK_CONTAINER(app->main_window), app->widget);
     g_signal_connect(G_OBJECT(app->main_window), "delete-event", 
             G_CALLBACK(sct_gtk_quit), app->notebook);

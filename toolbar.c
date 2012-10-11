@@ -5,12 +5,16 @@
 #include "secretary-gtk/gettext.h"
 
 #include "secretary-gtk/new-task-dialog.h"
+#include "secretary-gtk/new-project-dialog.h"
 
 static void on_new_task_button_clicked(GtkWidget *tool_button, gpointer data);
+static void on_new_project_button_clicked(GtkWidget *tool_button, gpointer data);
 
 GtkWidget *sct_gtk_toolbar_new(SctGtkApplication *app) {
     GtkToolItem *new_task_button = gtk_tool_button_new_from_stock(GTK_STOCK_NEW),
-            *delete_task_button = gtk_tool_button_new_from_stock(GTK_STOCK_DELETE);
+            *delete_task_button = gtk_tool_button_new_from_stock(GTK_STOCK_DELETE),
+            *new_project_button = gtk_tool_button_new_from_stock(GTK_STOCK_NEW),
+            *delete_project_button = gtk_tool_button_new_from_stock(GTK_STOCK_DELETE);
     GtkWidget *toolbar = gtk_toolbar_new();
 
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), new_task_button, 0);
@@ -19,8 +23,16 @@ GtkWidget *sct_gtk_toolbar_new(SctGtkApplication *app) {
     
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), delete_task_button, 1);
     
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), new_project_button, 2);
+    g_signal_connect(G_OBJECT(new_project_button), "clicked", 
+            G_CALLBACK(on_new_project_button_clicked), app);
+    
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), delete_project_button, 3);
+    
     gtk_widget_show(GTK_WIDGET(new_task_button));
     gtk_widget_show(GTK_WIDGET(delete_task_button));
+    gtk_widget_show(GTK_WIDGET(new_project_button));
+    gtk_widget_show(GTK_WIDGET(delete_project_button));
     gtk_widget_show(toolbar);
     
     app->add_task_button = new_task_button;
@@ -33,6 +45,15 @@ static void on_new_task_button_clicked(GtkWidget *tool_button, gpointer data) {
     gint result = gtk_dialog_run(GTK_DIALOG(app->new_task_dialog));
     if (result == GTK_RESPONSE_ACCEPT) {
         sct_gtk_new_task_dialog_create_task(GTK_DIALOG(app->new_task_dialog));
+    }
+}
+
+static void on_new_project_button_clicked(GtkWidget *tool_button, gpointer data) {
+    SctGtkApplication *app = data;
+    gint result = gtk_dialog_run(GTK_DIALOG(app->new_project_dialog));
+    if (result == GTK_RESPONSE_ACCEPT) {
+        sct_gtk_new_project_dialog_create_project(GTK_DIALOG(app->new_project_dialog));
+        notebook_save(app->notebook);
     }
 }
 
