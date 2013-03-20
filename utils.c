@@ -25,3 +25,4 @@ time_t sct_gtk_get_time_from_string(const char *date_string) {
 void sct_gtk_free_struct_callback(GtkWidget *dialog, gpointer data) {
     free(data);
 }
+

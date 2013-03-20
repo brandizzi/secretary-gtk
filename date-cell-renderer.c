@@ -9,6 +9,10 @@
 #include <gtk/gtk.h>
 
 
+static bool on_cell_renderer_text_editing_started(
+        GtkCellRenderer *renderer, GtkCellEditable *editable, 
+        gchar *path, gpointer data);
+
 static bool on_cell_renderer_text_edited(
     GtkCellRendererText *renderer, gchar path_string, gchar new_text,
     gpointer data);
@@ -43,6 +47,9 @@ GtkCellRenderer *sct_gtk_date_cell_renderer_new(void) {
     des->cell_renderer_edited_handler_id = g_signal_connect(
             G_OBJECT(des->cell_renderer), "edited", 
             G_CALLBACK(on_cell_renderer_text_edited), des);
+    g_signal_connect(
+            G_OBJECT(des->cell_renderer), "editing-started", 
+            G_CALLBACK(on_cell_renderer_text_editing_started), des);
     des->cell_renderer_notify_text_handler_id = g_signal_connect(
             G_OBJECT(des->cell_renderer), "notify::text", 
             G_CALLBACK(on_cell_renderer_text_notify_text), des);
@@ -164,7 +171,7 @@ static bool on_calendar_day_selected_double_click(
         GtkWidget *calendar, gpointer data) {
     SctGtkDateCellRendererStruct *des = data;
     gtk_widget_hide(des->calendar_window);
-    gtk_widget_grab_focus(des->cell_renderer);
+//    gtk_widget_grab_focus(des->cell_renderer);
     return false;
 }
 
@@ -172,6 +179,25 @@ static bool on_calendar_focus_out_event(
         GtkWidget *calendar, GdkEvent *event, gpointer data) {
     SctGtkDateCellRendererStruct *des = data;
     gtk_widget_hide(des->calendar_window);
+    return false;
+}
+
+// TODO put windows below input
+static bool on_cell_renderer_text_editing_started(
+        GtkCellRenderer *renderer, GtkCellEditable *editable, 
+        gchar *path, gpointer data) {
+    SctGtkDateCellRendererStruct *des = data;
+    
+    gint x, y, width, height, depth;
+    GtkAllocation allocation;
+    gtk_widget_get_allocation(GTK_WIDGET(editable), &allocation);
+    GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(editable));
+    gdk_window_get_geometry(window, &x, &y, &width, &height, &depth);
+    
+    gtk_window_move(
+            GTK_WINDOW(des->calendar_window),
+           allocation.x+x, allocation.y+allocation.height*2+y);
+    gtk_widget_show_all(des->calendar_window);
     return false;
 }
 

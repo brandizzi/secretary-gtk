@@ -3,6 +3,7 @@
 #include "secretary-gtk/task-tree-model.h"
 #include "secretary-gtk/project-tree-model.h"
 #include "secretary-gtk/task-tree-view.h"
+#include "secretary-gtk/date-cell-renderer.h"
 #include "secretary-gtk/gettext.h"
 
 static void on_done_cell_renderer_toggled(
@@ -18,7 +19,7 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
     GtkCellRenderer *done_renderer = gtk_cell_renderer_toggle_new(),
             *description_renderer = gtk_cell_renderer_text_new(),
             *project_renderer = gtk_cell_renderer_combo_new(),
-            *date_renderer = gtk_cell_renderer_text_new();
+            *date_renderer = sct_gtk_date_cell_renderer_new();
     GtkTreeModel *model = sct_gtk_task_tree_model_new(app->secretary);
             
     gtk_tree_view_insert_column_with_data_func(
@@ -54,6 +55,7 @@ GtkWidget *sct_gtk_task_tree_view_new(SctGtkApplication *app) {
             GTK_TREE_VIEW(treeview), SCT_GTK_TASK_TREE_VIEW_SCHEDULE_DATE_COLUMN,
             _("Scheduled to"), date_renderer, 
             sct_gtk_task_tree_view_scheduled_date_cell_data_func, NULL, NULL);
+    g_object_set(G_OBJECT(date_renderer), "editable", true, NULL);
     
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), model);
     g_object_unref(model);

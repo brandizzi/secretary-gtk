@@ -32,5 +32,6 @@ SctGtkApplication *sct_gtk_application_new(Notebook *notebook);
 void sct_gtk_application_free(SctGtkApplication *application);
 void sct_gtk_application_select_path_on_perspective_tree_view(
         SctGtkApplication *app, const gchar *path);
+void sct_gtk_applicaton_refresh_task_view(SctGtkApplication *application);
 
 #endif /* _SECRETARY_GTK_APPLICATION */
